@@ -2,3 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn {
+    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+}
+
+.btn:hover {
+    background: linear-gradient(94.19deg, #FBDB18 -2.07%, #EB5051 59.25%, #E8334E 140.58%);
+}
+
+.btn2 {
+    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+}
+
+.btn3:hover {
+    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+}
+
+.header {
+    background: linear-gradient(180deg, #FFFFFF 24.72%, rgba(235, 80, 81, 0.35) 49.85%, rgba(232, 51, 78, 0.74) 77.25%);
+    /* position: relative;
+    z-index: 1; */
+}
+
+/* .svg-overlay {
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    width: 90%;
+    height: 90%;
+    z-index: 0;
+  } */
+
+.about_bg {
+    background: linear-gradient(180deg, #E9AFB7 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.replay_bg {
+    background: linear-gradient(180deg, #E9AFB7 43.96%, #FFFFFF 57.84%);
+}

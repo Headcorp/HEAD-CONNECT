@@ -1,4 +1,4 @@
-export function Navbar() {
+export function Navbar () {
   return (
     <div className="w-[90%] mx-auto flex justify-between items-center p-4">
       <a href="">
