@@ -40,3 +40,7 @@
 .replay_bg {
     background: linear-gradient(180deg, #E9AFB7 43.96%, #FFFFFF 57.84%);
 }
+
+.footer_bg {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.83) 0%, #E8334E 100%);
+}

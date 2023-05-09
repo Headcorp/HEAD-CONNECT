@@ -14,10 +14,10 @@ export function Feature () {
                             <button className="text-white px-4 py-2 text-xl font-bold rounded-md border-pink border btn3">Formations</button>
                         </div>
                         <div className="w-[90%] mx-auto mt-4 space-x-4 grid grid-cols-3">
-                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md w-[300px] h-[400px]"> {/* opacity-40 items-center*/}
-                                <div className="bg-pink text-center p-1 mt-2 w-[90%] rounded-md mx-auto">
-                                    <h2 className="text-yellow font-bold text-md">Theme: Data's value in 2023</h2>
-                                    <h2 className="text-yellow font-bold text-md">Date: 15/06/2023</h2>
+                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md p-4 items-center w-[300px]"> {/* opacity-40 items-center h-[400px]*/}
+                                <div className="bg-pink text-center p-1 w-[90%] rounded-md mx-auto">
+                                    <h2 className="text-yellow font-bold text-sm">Theme: Data's value in 2023</h2>
+                                    <h2 className="text-yellow font-bold text-sm">Date: 15/06/2023</h2>
                                 </div>
                                 <h2 className="text-red font-bold text-xl">Principal guest</h2>
                                 <img src="../images/conf1.png" alt="" className="mx-auto" />
@@ -27,10 +27,10 @@ export function Feature () {
                                 </div>
                                 <button className="text-white px-2 py-1 text-lg font-bold rounded-md btn">Read more</button>
                             </div>
-                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md w-[300px] h-[400px]"> {/* opacity-40 items-center*/}
-                                <div className="bg-pink text-center p-1 mt-2 w-[90%] rounded-md mx-auto">
-                                    <h2 className="text-yellow font-bold text-md">Theme: My cell phone my tresor</h2>
-                                    <h2 className="text-yellow font-bold text-md">Date: 24/07/2023</h2>
+                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md p-4 items-center w-[300px]"> {/* opacity-40 items-center*/}
+                                <div className="bg-pink text-center p-1 w-[90%] rounded-md mx-auto">
+                                    <h2 className="text-yellow font-bold text-sm">Theme: My cell phone my tresor</h2>
+                                    <h2 className="text-yellow font-bold text-sm">Date: 24/07/2023</h2>
                                 </div>
                                 <h2 className="text-red font-bold text-xl">Principal guest</h2>
                                 <img src="../images/conf2.png" alt="" className="mx-auto" />
@@ -40,10 +40,10 @@ export function Feature () {
                                 </div>
                                 <button className="text-white px-2 py-1 text-lg font-bold rounded-md btn">Read more</button>
                             </div>
-                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md w-[300px] h-[400px]"> {/* opacity-40 items-center*/}
-                                <div className="bg-pink text-center p-1 mt-2 w-[90%] rounded-md mx-auto">
-                                    <h2 className="text-yellow font-bold text-md">Theme: The first 1 M the hardest</h2>
-                                    <h2 className="text-yellow font-bold text-md">Date: 26/09/2023</h2>
+                            <div className="bg-white mx-auto opacity-100 space-y-1 rounded-md p-4 items-center w-[300px]"> {/* opacity-40 items-center*/}
+                                <div className="bg-pink text-center p-1 w-[90%] rounded-md mx-auto">
+                                    <h2 className="text-yellow font-bold text-sm">Theme: The first 1 M the hardest</h2>
+                                    <h2 className="text-yellow font-bold text-sm">Date: 26/09/2023</h2>
                                 </div>
                                 <h2 className="text-red font-bold text-xl">Principal guest</h2>
                                 <img src="../images/conf3.png" alt="" className="mx-auto" />

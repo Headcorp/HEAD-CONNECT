@@ -3,8 +3,8 @@
 import {About} from '../components/About'
 import {Header} from '../components/Header'
 import {Feature} from '../components/Feature'
-import {Team} from '../components/Team'
 import { Replay } from '../components/Replay'
+import {Team} from '../components/Team'
 import { Footer } from '../components/Footer'
 
 export default function Home() {
@@ -12,9 +12,9 @@ export default function Home() {
     <div>
       <Header />
       <About />
-      <Feature />
-      <Team />
+      {/* <Feature /> */}
       <Replay />
+      {/* <Team /> */}
       <Footer />
     </div>
   );
