@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.body {
+    font-family: "Ubuntu Mono";
+}
+
 .btn {
     background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
 }
