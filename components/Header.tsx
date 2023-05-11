@@ -13,8 +13,8 @@ export function Header () {
 
   useEffect(() => {
     setIsMobile(tempIsMobile)
-  }, [])
-  
+  }, [tempIsMobile])
+
   return (
     <div className="header">
         {/* {handleNavbar()} */}
