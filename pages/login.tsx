@@ -2,9 +2,9 @@ import "@fontsource/ubuntu-mono";
 
 export default function Login() {
   return (
-    <div className="header flex flex-col space-y-4 h-screen w-screen body items-center jsutify-center p-8">
-      <div className="flex items-center jsutify-center underline">
-        <span className="text-darkBlue text-6xl font-bold underline:text-darkBlue">
+    <div className="header flex flex-col space-y-4 h-screen w-screen body items-center jsutify-center p-2 lg:p-8">
+      <div className="flex items-center jsutify-center underline decoration-darkBlue">
+        <span className="text-darkBlue text-6xl font-bold">
           Login
         </span>
         <svg
@@ -20,17 +20,17 @@ export default function Login() {
           />
         </svg>
       </div>
-      <div className="w-1/3 h-full border-gradient-to-b from-pink via-violet to-yellow border-2 rounded-2xl bg-white/20 flex flex-col space-y-8 items-center p-8">
+      <div className="lg:w-1/3 w-full md:w-3/4 h-full border-red/50 border-2 rounded-2xl bg-white/20 flex flex-col space-y-8 items-center p-8">
         <img src="../images/logo.png" alt="logo" className="w-1/2" />
         <div className="flex flex-col space-y-4 w-full">
           <input
             type="text"
-            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50"
+            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
             placeholder="Email"
           />
            <input
             type="password"
-            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50"
+            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
             placeholder="Password"
           />
           <a href="#">

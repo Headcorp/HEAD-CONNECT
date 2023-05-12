@@ -38,3 +38,12 @@
 .footer_bg {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.83) 0%, #E8334E 150%);
 }
+
+.navbar_mobile {
+    background: linear-gradient(180deg, rgba(247, 159, 159, 0.83) 0%, #E8334E 150%);
+}
+
+.userheader {
+    background: linear-gradient(to right, #da8989, #E9AFB7, #E8334E);
+}
+

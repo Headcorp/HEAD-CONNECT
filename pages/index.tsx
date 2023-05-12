@@ -1,6 +1,7 @@
 import "@fontsource/ubuntu-mono";
-import {Navbar} from '../components/Navbar'
-import {Banner} from '../components/Banner'
+
+import {Navbar} from '../components/Navbar';
+import {Banner} from '../components/Banner';
 import { Header } from "../components/Header";
 import { About } from "../components/About";
 import { Feature } from "../components/Feature";

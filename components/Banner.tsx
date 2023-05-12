@@ -4,10 +4,10 @@ export function Banner () {
             <div className="bottom-0 left-0 top-0 right-0 bg-cover md:bg-center"
                 style={{ backgroundImage: `url(../icons/stars.svg)` }}>
                 <div className="flex flex-col md:flex-row justify-evenly mx-auto items-center">
-                    <div className="md:ml-20 md:mt-20 space-y-4 md:space-y-8 w-4/6 xl:mt-28">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl text-darkBlue font-bold xl:text-8xl">Lorem ipsum dolor sit amet</h1>
-                        <p className="text-darkBlue text-sm lg:text-lg xl:text-xl">consectetur adipisicing elit. Ducimus ut saepe sed aliquid, sequi, necessitatibus repellat ipsa labore repellendus quos molestias dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nesciunt, a mollitia iste voluptate odio nostrum</p>
-                        <button className="text-yellow px-4 py-2 md:px-8 md:py-4 font-bold text-2xl md:text-4xl rounded-md btn lg:text-5xl xl:text-6xl">Join now</button>
+                    <div className="md:ml-20 space-y-4 md:space-y-8 w-5/6 text-center md:text-start">
+                        <h1 className="text-5xl lg:text-6xl text-darkBlue font-bold xl:text-8xl">Lorem ipsum dolor sit amet</h1>
+                        <p className="text-darkBlue text-md lg:text-lg xl:text-xl">consectetur adipisicing elit. Ducimus ut saepe sed aliquid, sequi, necessitatibus repellat ipsa labore repellendus quos molestias dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nesciunt, a mollitia iste voluptate odio nostrum</p>
+                        <button className="text-yellow px-4 py-2 md:px-8 md:py-4 font-bold text-2xl md:text-4xl rounded-md btn xl:text-5xl">Join now</button>
                     </div>
                     <div className="md:mr-20">
                         <img src="../images/cercle.png" alt="image en tête" className="" />
