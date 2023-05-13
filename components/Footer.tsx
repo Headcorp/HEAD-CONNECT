@@ -3,11 +3,11 @@ export function Footer() {
     <div className="footer_bg">
       <div className="md:grid md:grid-cols-4 items-center p-6 space-y-8 md:space-y-0">
             <div className="flex flex-col justify-center items-center gap-2 md:gap-4">
-                <a href="" className=""><img src="../images/logo.png" alt="logo" /></a>
+                <a href="/" className=""><img src="../images/logo.png" alt="logo" className="hover:opacity-60" /></a>
                 <div className="flex justify-between space-x-2">
-                    <a href=""><img src="../icons/twitter.svg" alt="Twitter" width={40} height={40} /></a>
-                    <a href=""><img src="../icons/facebook.svg" alt="Facebook" width={40} height={40} /></a>
-                    <a href=""><img src="../icons/instagram.svg" alt="Instagram" width={40} height={40} /></a>
+                    <a href=""><img src="../icons/twitter.svg" alt="Twitter" width={40} height={40} className="hover:opacity-60" /></a>
+                    <a href=""><img src="../icons/facebook.svg" alt="Facebook" width={40} height={40} className="hover:opacity-60" /></a>
+                    <a href=""><img src="../icons/instagram.svg" alt="Instagram" width={40} height={40} className="hover:opacity-60" /></a>
                 </div>
             </div>
             <div className="flex items-center justify-center">

@@ -1,7 +1,7 @@
 export function UserNavbar() {
   return (
     <div className="w-full flex justify-between items-center py-4 px-1 userheader">
-      <a href="">
+      <a href="/">
         <img src="../images/logo.png" alt="logo" className="w-1/2 xl:w-full" />
       </a>
       <div className="flex space-x-8 text-xl font-semibold items-center lg:text-2xl lg:space-x-10 xl:text-3xl">

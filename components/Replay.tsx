@@ -15,7 +15,7 @@ export function Replay() {
   }, [isMobile]);
 
   return (
-    <div className="replay_bg">
+    <div className="replay_bg" id="pastevents">
         <div className="w-full text-center mx-auto p-4">
             <h1 className="text-darkBlue font-bold underline text-3xl pb-8 lg:text-4xl xl:text-5xl">You can relive our past events</h1>
             <div className="mx-auto space-x-4 w-full md:w-1/2">

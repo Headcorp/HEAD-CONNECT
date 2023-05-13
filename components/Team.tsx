@@ -1,6 +1,6 @@
 export function Team () {
   return (
-    <div className="relative">
+    <div className="relative" id="ourteam">
         <div className="z-30 bottom-0 left-0 top-0 right-0 h-screen bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(../images/team.png)` }}>
             <div className="absolute z-40 bottom-0 left-0 top-0 right-0 h-screen bg-cover bg-center"
