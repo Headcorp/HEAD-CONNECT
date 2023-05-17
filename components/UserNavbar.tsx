@@ -1,10 +1,10 @@
 export function UserNavbar() {
   return (
-    <div className="w-full flex justify-between items-center py-4 px-1 userheader">
-      <a href="/">
-        <img src="../images/logo.png" alt="logo" className="w-1/2 xl:w-full" />
+    <div className="w-full flex space-x-10 justify-between items-center p-4 userheader">
+      <a href="/" className="w-1/3 flex items-center">
+        <img src="../images/logo.png" alt="logo" className="w-1/2 xl:w-1/2 hover:opacity-60" />
       </a>
-      <div className="flex space-x-8 text-xl font-semibold items-center lg:text-2xl lg:space-x-10 xl:text-3xl">
+      <div className="flex space-x-8 text-xl font-semibold lg:text-2xl lg:space-x-10 xl:text-3xl w-1/3 items-center justify-center">
         <a
           href=""
           className="bg-white/50 border-4 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center"
@@ -42,8 +42,8 @@ export function UserNavbar() {
           </svg>
         </a>
       </div>
-      <div className="flex space-x-4 justify-between items-center">
-        <div className="relative w-1/4 flex items-center justify-center p-0 h-[80px]">
+      <div className="flex space-x-4 w-1/3 items-center justify-end">
+        <a href="#" className="relative w-1/6 flex items-center justify-center p-0 h-[70px] rounded-full hover:bg-pink/40">
           <svg
             width="35"
             height="35"
@@ -59,8 +59,8 @@ export function UserNavbar() {
           <div className="rounded-full bg-pink text-white  p-4 w-[10px] h-[10px]  absolute top-0 right-0 flex items-center justify-center">
             <span>5</span>
           </div>
-        </div>
-        <div className="relative w-1/4 flex items-center justify-center p-0 h-[80px]">
+        </a>
+        <a href="#" className="relative w-1/6 flex items-center justify-center p-0 h-[70px] rounded-full hover:bg-pink/40">
           <svg
             width="35"
             height="35"
@@ -76,8 +76,8 @@ export function UserNavbar() {
           <div className="rounded-full bg-pink text-white p-4 w-[10px] h-[10px] absolute top-0 right-0 flex items-center justify-center">
             <span>5</span>
           </div>
-        </div>
-        <a href="#" className="flex space-x-2 relative w-1/2">
+        </a>
+        <a href="#" className="flex space-x-2 relative w-1/3 rounded-full hover:bg-pink/90">
           <svg
             width="42"
             height="42"

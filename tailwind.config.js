@@ -19,7 +19,8 @@ module.exports = {
       darkBlue:"#2E5F7E",
       yellow:"#FBDB18",
       violet:"#E30A81",
-      red:"#E8334E"
+      red:"#E8334E",
+      blancsale:"#FFF1F3"
     }
   },
   plugins: [],
