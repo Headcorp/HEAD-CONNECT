@@ -6,18 +6,26 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { LoginButton } from './LoginButton'
 
 export function NavbarMobile() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [menuIcon, setMenuIcon] = useState("menu.svg")
+  const navbarRef = useRef<HTMLDivElement>(null)
+
+  const links = () => {
+    if(session){
+      return [
+        { label: 'Sign Out', onClick: () => signOut() }
+      ]
+    }
+    return [
+      { label: 'Sign In', onClick: () => signIn() },
+    ];
+  }
+
   const { data: session } = useSession()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [menuIcon, setMenuIcon] = useState("menu.svg");
-  const navbarRef = useRef<HTMLDivElement>(null);
-  const links = [
-    { href: '/login', label: 'Login' },
-    { href: '/signup', label: 'Sign Up' }
-  ];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  }
 
   useEffect(() => {
     isMobileMenuOpen ? setMenuIcon("close.svg") : setMenuIcon("menu.svg");
@@ -35,7 +43,7 @@ export function NavbarMobile() {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [])
 
   return (
     <div className="relative mx-auto flex justify-between items-center p-4">
@@ -49,20 +57,19 @@ export function NavbarMobile() {
             <img src="../icons/login.svg" alt="" width={40} height={40} className="hover:opacity-60" />
           </Menu.Button>
           <Menu.Items as="div" className="flex flex-col items-center navbar_mobile absolute z-50 top-30 mt-16 text-2xl font-bold right-0 w-[50%] text-center uppercase rounded-xl text-darkBlue p-8 space-y-4">
-            {links.map((link) => (
-              <Menu.Item key={link.href} as={Fragment}>
-                {({ active }) => (
-                  <a
-                    href={link.href}
-                    className={`${
-                      active ? 'underline' : ''
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                )}
-              </Menu.Item>
-            ))}
+            {links().map((link) => (
+            <Menu.Item key={link.label} as={Fragment}>
+              {({ active }) => (
+                <button 
+                  className={`${
+                    active ? 'underline' : ''
+                  }`}
+                  onClick={link.onClick}>
+                  {link.label}
+                </button>
+              )}
+            </Menu.Item>
+          ))}
           </Menu.Items>
         </Menu>
         <div className="" ref={navbarRef}>

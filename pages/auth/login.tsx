@@ -1,16 +1,58 @@
 import "@fontsource/ubuntu-mono";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { getProviders, signIn, getSession, getCsrfToken } from "next-auth/react";
+import { Formik, Form, Field, FieldAttributes } from 'formik';
+import * as Yup from 'yup';
 
-function login({ providers }: any) {
+const loginShape = {
+  username: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().required("Required")
+  .min(8, 'Password must be 8 characters long')
+  .matches(/[0-9]/, 'Password requires a number')
+  .matches(/[a-z]/, 'Password requires a lowercase letter')
+  .matches(/[A-Z]/, 'Password requires an uppercase letter')
+  .matches(/[^\w]/, 'Password requires a symbol'),
+}
+const LoginSchema = Yup.object().shape(
+  loginShape
+);
+const SignupSchema = Yup.object().shape({
+  ...loginShape,
+  confirmPassword: Yup.string().required().oneOf([Yup.ref('password'), ''], 'Must match "password" field value')
+})
+
+const loginInitialValues = {
+  username: '',
+  password: '',
+  confirmPassword: ''
+}
+
+function login({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [hidePassword, setHidePassword] = useState(false)
+  const [menuIcon, setMenuIcon] = useState("eye.svg")
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+
+  useEffect(() => {
+    showPassword ? setMenuIcon("eye_off.svg") : setMenuIcon("eye.svg");
+  }, [showPassword])
+
   return (
-    <div className="header flex flex-col space-y-4 h-screen w-screen body items-center jsutify-center p-2 lg:p-8">
-      <div className="flex items-center jsutify-center underline decoration-darkBlue">
+    <div className="header body flex flex-col space-y-2 h-screen w-screen items-center justify-center p-2 lg:p-8">
+      <div className="flex max-h-full items-center jsutify-center underline decoration-darkBlue">
         <span className="text-darkBlue text-6xl font-bold">
           Login
         </span>
         <svg
-          width="80"
-          height="80"
+          width="60"
+          height="60"
           viewBox="0 0 80 80"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -21,33 +63,115 @@ function login({ providers }: any) {
           />
         </svg>
       </div>
-      <div className="lg:w-1/3 w-full md:w-3/4 h-full border-red/50 border-2 rounded-2xl bg-white/20 flex flex-col space-y-8 items-center p-8">
+      <div className="lg:w-1/3 w-full md:w-3/4 h-full border-red/50 border-2 rounded-2xl bg-white/20 flex flex-col space-y-2 lg:space-y-6 items-center p-4 lg:p-8">
         <a href="/">
-          <img src="../images/logo.png" alt="logo" className="w-1/2" />
+          <img src="../images/logo.png" alt="logo" className="w-1/2 mx-auto hover:opacity-60" />
         </a>
-        <div className="flex flex-col space-y-4 w-full">
-          <input
-            type="text"
-            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
-            placeholder="Email"
-          />
-           <input
-            type="password"
-            className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
-            placeholder="Password"
-          />
-          <a href="#">
-            <span className="text-darkBlue text-2xl font-bold hover:underline">
-              Create account
-            </span>
-          </a>
-          <a href="#">
-            <span className="text-darkBlue text-2xl font-bold hover:underline">
-              Forgot your password?
-            </span>
-          </a>
+        <Formik
+          initialValues={loginInitialValues}
+          validationSchema={showPasswordConfirmation ? SignupSchema : LoginSchema}
+          onSubmit={values => {
+            // same shape as initial values
+            signIn("credentials", values)
+          }}
+        >
+          {({ errors, touched, isValidating }) => (
+            <Form className="w-full flex flex-col justify-center space-y-2">
+              <div className="flex flex-col space-y-2 w-full">
+                <Field
+                  name='username'
+                  type="text"
+                  className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
+                  placeholder="Email"
+                />
+                {errors.username && touched.username && <div>{errors.username}</div>}
+                {hidePassword ? undefined :
+                <>
+                  <Field
+                    name='password'
+                    type="password"
+                    className=""
+                    placeholder="Password"
+                  >
+                    {({ field }: FieldAttributes<any>) => (
+                      <div className="relative">
+                        <input {...field} name="password" type={showPassword ? "text" : "password"} placeholder="Password" className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink" />
+                        <button
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                          className="absolute top-10 right-6 transform -translate-y-1/2 focus:outline-none"
+                        >
+                          <img src={`../icons/${menuIcon}`} width={20} height={20} alt="" />
+                        </button>
+                      </div>
+                    )}
+                  </Field>
+                  {errors.password && touched.password && <div>{errors.password}</div>}
+                </>}
+                {showPasswordConfirmation && !hidePassword ?
+                <>
+                  <Field
+                    name='confirmPassword'
+                    type="password"
+                    className=""
+                    placeholder="Confirm Password"
+                  >
+                    {({ field }: FieldAttributes<any>) => (
+                      <div className="relative">
+                        <input {...field} name="confirmPassword" type={showPassword ? "text" : "password"} placeholder="Confirm Password" className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink" />
+                        <button
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                          className="absolute top-10 right-6 transform -translate-y-1/2 focus:outline-none"
+                        >
+                          <img src={`../icons/${menuIcon}`} width={20} height={20} alt="" />
+                        </button>
+                      </div>
+                    )}
+                  </Field>
+                  { errors.confirmPassword && touched.confirmPassword && <div>{errors.confirmPassword}</div> }
+                </> :
+                undefined}
+                <button type="reset" onClick={(e) => {
+                    e.preventDefault()
+                    setShowPasswordConfirmation(!showPasswordConfirmation)
+                    setHidePassword(false)
+                  }} className="text-start">
+                  <span className="text-darkBlue text-2xl font-bold hover:underline">
+                    {showPasswordConfirmation && !hidePassword ? "Already have an account ?" : "Create an account"}
+                  </span>
+                </button>
+                <button type="reset" onClick={(e) => {
+                    e.preventDefault()
+                    setHidePassword(!hidePassword)
+                    setShowPasswordConfirmation(false)
+                  }} className="text-start">
+                  <span className="text-darkBlue text-2xl font-bold hover:underline">
+                    {!hidePassword ? "Forgot your password?" : "Login"}
+                  </span>
+                </button>
+              </div>
+              <button type="submit" className="btn px-8 py-4 text-yellow font-bold text-2xl rounded-xl mx-auto">Connexion</button>
+            </Form>
+          )}
+        </Formik>
+        <div className="w-full flex justify-center items-center space-x-2">
+          <span className="w-1/4 h-[1px] bg-darkBlue text-center"></span>
+          <span className="text-darkBlue text-2xl text-center font-bold">ou</span>
+          <span className="w-1/4 h-[1px] bg-darkBlue text-center"></span>
         </div>
-        <button className="btn px-8 py-4 text-yellow font-bold text-2xl rounded-xl">Connexion</button>
+        {Object.values(providers).map((provider) => {
+          if(provider.name != 'Credentials'){
+            return (
+              <div className='flex' key={provider.name}>
+                <Image className="mx-3 my-2" width={25} height={25} src={`../icons/${provider.name}.svg`} alt={provider.name} />
+                <button className="text-darkBlue text-2xl font-bold hover:underline" onClick={() => signIn(provider.id)}>
+                  Sign in with {provider.name}
+                </button>
+              </div>
+            )
+          }
+        })}
       </div>
     </div>
   );
@@ -67,7 +191,7 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      providers: await getProviders(),
+      providers: await getProviders() ?? [],
       csrfToken: await getCsrfToken(context),
     },
   };

@@ -77,7 +77,7 @@ export function UserNavbar() {
             <span>5</span>
           </div>
         </a>
-        <a href="#" className="flex space-x-2 relative w-1/3 rounded-full hover:bg-pink/90">
+        <a href="#" className="flex space-x-2 items-center w-1/3 rounded-full hover:bg-pink/90">
           <svg
             width="42"
             height="42"
