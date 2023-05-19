@@ -1,6 +1,6 @@
 export function UserProfilCard() {
   return (
-    <div className="w-full md:w-1/2 lg:w-2/3 h-[850px] rounded-xl bg-white md:mx-12 lg:mx-6 mx-4 py-6 px-12 flex flex-col items-center space-y-4">
+    <div className="w-full md:w-1/2 lg:w-2/3 rounded-xl bg-white md:mx-12 lg:mx-6 mx-4 py-6 px-12 flex flex-col items-center space-y-4">
       <img
         src="../images/blackperson.jpg"
         alt=""

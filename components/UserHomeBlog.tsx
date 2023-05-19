@@ -3,11 +3,10 @@ import "@fontsource/ubuntu-mono";
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
-import { UserNavbar } from "../components/UserNavbar";
-import { UserNavbarMobile } from "../components/UserNavbarMobile";
-import { Tabs } from "../components/Tab";
+import { UserProfilCard } from "../components/UserProfilCard";
+import { BlogPubCard } from "../components/BlogPubCard";
 
-export default function UserHome() {
+export function UserHomeBlog() {
   const [isMobile, setIsMobile] = useState(false);
   const tempIsMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -17,10 +16,13 @@ export default function UserHome() {
 
   return (
     <div className="body">
-      {isMobile ? <UserNavbarMobile /> : <UserNavbar />}
-      {/* <div className="flex bg-blancsale w-screen h-auto px-8 py-4">
+      <div className="flex bg-blancsale w-screen h-auto px-8 py-4">
         {!isMobile ? <UserProfilCard /> : null}
-      </div> */}
+        <div className="flex flex-col space-y-6 items-center">
+          <BlogPubCard />
+          <BlogPubCard />
+        </div>
+      </div>
     </div>
   );
 }
