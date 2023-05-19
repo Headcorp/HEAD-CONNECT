@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { UserProfilCard } from "../components/UserProfilCard";
 import { BlogPubCard } from "../components/BlogPubCard";
+// import { ListItem } from "../components/ListItem";
 
 export function UserHomeBlog() {
   const [isMobile, setIsMobile] = useState(false);
