@@ -9,5 +9,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  //const r = res.redirect('/api/auth/session')
+  //console.log(r)
   res.status(200).json({ name: 'John Doe' })
 }
