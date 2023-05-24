@@ -10,6 +10,7 @@ import { useMediaQuery } from "react-responsive";
 import { CurentView } from "./CurentView";
 import { ListItem } from "./ListItem";
 import { ListView } from "./ListView";
+import { GridView } from "./GridView";
 
 export function PastEvents() {
   const [isMobile, setIsMobile] = useState(false);
@@ -88,8 +89,7 @@ export function PastEvents() {
                 <ListItem />
             </Tab.Panel>
             <Tab.Panel className="w-full flex space-x-4">
-                <CurentView/>
-                <ListItem />
+                <GridView />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group> }
@@ -146,8 +146,7 @@ export function PastEvents() {
                 <ListItem />
             </Tab.Panel>
             <Tab.Panel className="w-full flex space-x-4">
-                <CurentView/>
-                <ListItem />
+                <GridView />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group> }

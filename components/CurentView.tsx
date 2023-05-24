@@ -1,10 +1,11 @@
 import "@fontsource/ubuntu-mono";
+import React from "react";
 
 export function CurentView() {
   return (
     <div className="body w-full sm:w-2/3 rounded-xl flex flex-col space-y-4">
       <div className="rounded-xl">
-        <img src="../images/test.jpg" className="sm:rounded-2xl" />
+        <img src="../images/test.jpg" className="rounded-xl sm:rounded-2xl" />
       </div>
       <div className="flex space-x-6 items-center justify-between">
         <span className="text-xl text-darkBlue font-semibold">
