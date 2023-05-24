@@ -1,13 +1,16 @@
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions, Session } from "next-auth"
+import "../../../types/next-auth.d.ts"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import axios from "axios"
+import { JWT } from "next-auth/jwt"
+import { AdapterUser } from "next-auth/adapters"
 
 const URL = process.env.URL || 'http://localhost:8069/nextjs'
 const DB = process.env.DB || 'hcs'
-
-export const authOptions = {
+NextAuth
+export const authOptions:AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -60,6 +63,22 @@ export const authOptions = {
   ],
   pages: {
     signIn: '/auth/login'
+  },
+  callbacks: {
+    async session({ session, token, user }:{
+      session: Session;
+      token: JWT;
+      user: AdapterUser;
+    }  & {
+      newSession: any;
+      trigger: "update";
+    }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      //session.accessToken = token.accessToken
+      session.user.id = token.sub
+      
+      return session
+    }
   }
 }
 
