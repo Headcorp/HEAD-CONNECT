@@ -1,23 +1,23 @@
 import "@fontsource/ubuntu-mono";
 
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
-/*
-import { useState, useEffect } from "react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useMediaQuery } from "react-responsive";
-*/
 
 import { CurentView } from "./CurentView";
 import { ListItem } from "./ListItem";
 import { ListView } from "./ListView";
 
 export function PastEvents() {
-  /* const [isMobile, setIsMobile] = useState(false);
-  const tempIsMobile = useMediaQuery({ maxWidth: 768 });
+  const [isMobile, setIsMobile] = useState(false);
+  const tempIsMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     setIsMobile(tempIsMobile);
   }, [tempIsMobile]);
-*/
+
   return (
     <div className="body flex flex-col space-y-4 items-center justify-center w-screen">
       <div className="w-2/3 flex space-x-0">
@@ -55,7 +55,7 @@ export function PastEvents() {
         </button>
       </div>
       <div className="flex flex-col lg:flex-row space-x-4 w-full justify-center items-center lg:items-start">
-        <Tab.Group>
+        { !isMobile && <Tab.Group>
           <div className="flex bg-blancsale w-1/4 flex-col">
             <Tab.List className="flex bg-blancsale lg:flex-col space-y-6 w-full justify-center items-center my-4">
               <Tab>
@@ -91,7 +91,65 @@ export function PastEvents() {
                 <ListItem />
             </Tab.Panel>
           </Tab.Panels>
-        </Tab.Group>
+        </Tab.Group> }
+        { isMobile && <Tab.Group>
+          <Menu as="div" className="relative inline-block">
+            <div>
+              <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+              <span className="text-xl font-bold text-pink">Profil</span>
+                <ChevronDownIcon
+                  className="ml-2 -mr-1 h-5 w-5 text-xl font-bold text-pink hover:text-violet-100"
+                  aria-hidden="true"
+                />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="w-full rounded-xl bg-blancsale p-6 flex flex-col items-center space-y-4">
+                  <Tab.List className="flex flex-col space-y-6 w-full justify-center items-center">
+                    <Tab>
+                      <button className="btn border-2 sm:border-4 border-pink px-4 py-2 sm:px-6 sm:py-4 text-white font-bold text-lg sm:text-2xl rounded-xl">
+                        Conferences
+                      </button>
+                    </Tab>
+                    <Tab>
+                      <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
+                        workshop
+                      </button>
+                    </Tab>
+                    <Tab>
+                      <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
+                        formations
+                      </button>
+                    </Tab>
+                  </Tab.List>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+          <Tab.Panels className="lg:w-3/4">
+            <Tab.Panel className="w-full flex space-x-4 space-y-4 flex-col lg:flex-row justify-center items-center lg:items-start">
+                <CurentView/>
+                <ListView />
+            </Tab.Panel>
+            <Tab.Panel className="w-full flex space-x-4">
+                <CurentView/>
+                <ListItem />
+            </Tab.Panel>
+            <Tab.Panel className="w-full flex space-x-4">
+                <CurentView/>
+                <ListItem />
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group> }
       </div>
     </div>
   );
