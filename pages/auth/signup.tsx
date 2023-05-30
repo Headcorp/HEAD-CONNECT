@@ -1,5 +1,5 @@
 import "@fontsource/ubuntu-mono";
-
+import "@fontsource/yantramanav";
 export default function SignUp() {
   return (
     <div className="header flex flex-col space-y-4 md:h-screen w-screen body items-center jsutify-center p-4">

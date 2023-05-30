@@ -1,8 +1,11 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, SVGProps, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useSession } from "next-auth/react";
 
 export function Dropdown() {
+  const {data: session} = useSession()
+
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
@@ -24,8 +27,8 @@ export function Dropdown() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-[320px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="w-full md:w-1/2 lg:w-2/3 rounded-xl bg-white md:mx-12 lg:mx-6 mx-4 py-6 px-12 flex flex-col items-center space-y-4">
+          <Menu.Items className="absolute right-0 mt-2 w-[300px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="w-full lg:w-2/3 rounded-xl bg-white mx-auto p-2 flex flex-col items-center space-y-4">
               <img
                 src="../images/blackperson.jpg"
                 alt=""
@@ -33,7 +36,7 @@ export function Dropdown() {
                 width="300"
                 height="300"
               />
-              <span className="text-pink text-2xl font-bold">Joh Doe</span>
+              <span className="text-pink text-2xl font-bold">{session?.user.name}</span>
               <span className="text-pink text-xl">Web designer</span>
               <span className="text-darkBlue text-xl text-center">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

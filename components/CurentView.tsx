@@ -3,17 +3,17 @@ import React from "react";
 
 export function CurentView() {
   return (
-    <div className="body w-full sm:w-2/3 rounded-xl flex flex-col space-y-4">
+    <div className="body w-full lg:w-2/3 rounded-xl flex flex-col space-y-4">
       <div className="rounded-xl">
-        <img src="../images/test.jpg" className="rounded-xl sm:rounded-2xl" />
+        <img src="../images/test.jpg" className="" />
       </div>
-      <div className="flex space-x-6 items-center justify-between">
-        <span className="text-xl text-darkBlue font-semibold">
+      <div className="flex space-x-6 items-center justify-between px-4">
+        <span className="text-3xl sm:text-5xl text-darkBlue font-semibold">
           Titre de l'event
         </span>
       </div>
-      <div className="flex space-x-6 items-center justify-between">
-        <span className="text-xl text-darkBlue font-semibold">Moniteur</span>
+      <div className="flex space-x-6 items-center justify-between px-4">
+        <span className="text-xl sm:text-3xl text-darkBlue font-semibold">Moniteur</span>
         <div className="">
           <div className="flex space-x-4 rounded-full bg-white px-4 py-2">
             <button className="">
@@ -30,13 +30,13 @@ export function CurentView() {
                 />
               </svg>
             </button>
-            <span className="text-xl text-pink">452</span>
+            <span className="text-2xl text-pink">452</span>
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <span className="text-xl text-darkBlue">Nb vues</span>
-        <span className="text-xl text-darkBlue">depuis.....jours</span>
+      <div className="flex items-center justify-between px-4">
+        <span className="text-xl sm:text-2xl text-darkBlue">Nb vues</span>
+        <span className="text-xl sm:text-2xl text-darkBlue">depuis.....jours</span>
       </div>
     </div>
   );

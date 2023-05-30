@@ -1,22 +1,33 @@
 import "@fontsource/ubuntu-mono";
+import "@fontsource/yantramanav";
 
 import React from "react";
+import axios from "axios";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Tab } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useMediaQuery } from "react-responsive";
 
-import { CurentView } from "./CurentView";
-import { ListItem } from "./ListItem";
-import { ListView } from "./ListView";
 import { GridView } from "./GridView";
 
 export function PastEvents() {
   const [isMobile, setIsMobile] = useState(false);
   const tempIsMobile = useMediaQuery({ maxWidth: 767 });
+  const [courses, setCourses] = useState([])
+  const [activeButton, setActiveButton] = useState('conferences')
+
+  const getCourses = async () => {
+    try {
+      const { data } = await axios.get('/api/classroom/courses')
+      setCourses(data)
+    } catch (error) {
+
+    }
+  }
 
   useEffect(() => {
+    getCourses();
     setIsMobile(tempIsMobile);
   }, [tempIsMobile]);
 
@@ -25,10 +36,10 @@ export function PastEvents() {
       <div className="w-2/3 flex space-x-0">
         <input
           type="text"
-          className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-4 border-pink bg-blancsale"
-          placeholder="search"
+          className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale"
+          placeholder="Search"
         />
-        <button className="w-1/5 rounded-r-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-4 border-pink bg-blancsale flex items-center justify-center hover:bg-pink">
+        <button className="w-1/5 rounded-r-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale flex items-center justify-center hover:bg-pink">
           <svg
             width="26"
             height="26"
@@ -57,47 +68,48 @@ export function PastEvents() {
         </button>
       </div>
       <div className="flex flex-col lg:flex-row space-x-4 w-full justify-center items-center lg:items-start">
-        { !isMobile && <Tab.Group>
+        {!isMobile && <Tab.Group>
           <div className="flex bg-blancsale w-1/4 flex-col">
             <Tab.List className="flex bg-blancsale lg:flex-col space-y-6 w-full justify-center items-center my-4">
-              <Tab>
-                <button className="btn border-2 sm:border-4 border-pink px-4 py-2 sm:px-6 sm:py-4 text-white font-bold text-lg sm:text-2xl rounded-xl">
+              <Tab
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                ${activeButton === 'conferences' ? 'text-white btn' : 'text-red'}`}
+                onClick={() => setActiveButton('conferences')}>
                   Conferences
-                </button>
               </Tab>
 
-              <Tab>
-                <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
-                  workshop
-                </button>
+              <Tab
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                ${activeButton === 'workshops' ? 'text-white btn' : 'text-red'}`}
+                onClick={() => setActiveButton('workshops')}>
+                  Workshops
               </Tab>
 
-              <Tab>
-                <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
-                  formations
-                </button>
+              <Tab
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                ${activeButton === 'formations' ? 'text-white btn' : 'text-red'}`}
+                onClick={() => setActiveButton('formations')}>
+                  Formations
               </Tab>
             </Tab.List>
           </div>
           <Tab.Panels className="lg:w-3/4">
             <Tab.Panel className="w-full flex space-x-4 space-y-4 flex-col lg:flex-row justify-center items-center lg:items-start">
-                <CurentView/>
-                <ListView />
+              <GridView type="conferences" views={[]} />
             </Tab.Panel>
-            <Tab.Panel className="w-full flex space-x-4">
-                <CurentView/>
-                <ListItem />
+            <Tab.Panel className="">
+              <GridView type="workshops" views={[]} />
             </Tab.Panel>
-            <Tab.Panel className="w-full flex space-x-4">
-                <GridView />
+            <Tab.Panel className="">
+              <GridView type="courses" views={courses} />
             </Tab.Panel>
           </Tab.Panels>
-        </Tab.Group> }
-        { isMobile && <Tab.Group>
+        </Tab.Group>}
+        {isMobile && <Tab.Group>
           <Menu as="div" className="relative inline-block">
             <div>
               <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-              <span className="text-xl font-bold text-pink">Profil</span>
+                <span className="text-xl font-bold text-pink">Profil</span>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-xl font-bold text-pink hover:text-violet-100"
                   aria-hidden="true"
@@ -115,21 +127,26 @@ export function PastEvents() {
             >
               <Menu.Items className="absolute right-0 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="w-full rounded-xl bg-blancsale p-6 flex flex-col items-center space-y-4">
-                  <Tab.List className="flex flex-col space-y-6 w-full justify-center items-center">
-                    <Tab>
-                      <button className="btn border-2 sm:border-4 border-pink px-4 py-2 sm:px-6 sm:py-4 text-white font-bold text-lg sm:text-2xl rounded-xl">
+                  <Tab.List className="flex flex-col space-y-6 bg-blancsale w-full justify-center items-center">
+                    <Tab
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      ${activeButton === 'conferences' ? 'text-white btn' : 'text-red'}`}
+                      onClick={() => setActiveButton('conferences')}>
                         Conferences
-                      </button>
                     </Tab>
-                    <Tab>
-                      <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
-                        workshop
-                      </button>
+
+                    <Tab
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      ${activeButton === 'workshops' ? 'text-white btn' : 'text-red'}`}
+                      onClick={() => setActiveButton('workshops')}>
+                        Workshops
                     </Tab>
-                    <Tab>
-                      <button className="px-4 py-2 sm:px-6 sm:py-4 text-pink font-bold text-lg sm:text-2xl rounded-xl border-2 sm:border-4 border-pink">
-                        formations
-                      </button>
+
+                    <Tab
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      ${activeButton === 'formations' ? 'text-white btn' : 'text-red'}`}
+                      onClick={() => setActiveButton('formations')}>
+                        Formations
                     </Tab>
                   </Tab.List>
                 </div>
@@ -138,18 +155,16 @@ export function PastEvents() {
           </Menu>
           <Tab.Panels className="lg:w-3/4">
             <Tab.Panel className="w-full flex space-x-4 space-y-4 flex-col lg:flex-row justify-center items-center lg:items-start">
-                <CurentView/>
-                <ListView />
+              <GridView type="conferences" views={[]} />
             </Tab.Panel>
             <Tab.Panel className="w-full flex space-x-4">
-                <CurentView/>
-                <ListItem />
+              <GridView type="workshops" views={[]} />
             </Tab.Panel>
             <Tab.Panel className="w-full flex space-x-4">
-                <GridView />
+              <GridView type="courses" views={courses} />
             </Tab.Panel>
           </Tab.Panels>
-        </Tab.Group> }
+        </Tab.Group>}
       </div>
     </div>
   );

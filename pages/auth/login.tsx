@@ -1,4 +1,5 @@
 import "@fontsource/ubuntu-mono";
+import "@fontsource/yantramanav";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
@@ -181,11 +182,12 @@ export default login
 
 export async function getServerSideProps(context: any) {
   const { req } = context;
+  const {redirect} = context.query
   const session = await getSession({ req });
 
   if (session) {
     return {
-      redirect: { destination: "/" },
+      redirect: { destination: redirect ? redirect : "/userhome" },
     };
   }
 

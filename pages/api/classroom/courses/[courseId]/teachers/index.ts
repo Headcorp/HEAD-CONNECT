@@ -7,24 +7,23 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse< google.classroom_v1.Schema$Teacher[] | undefined>
 ) {
-  
+  const {courseId} = req.query
   switch (req.method) {
     case 'GET':
-      const teachers = await listTeachers();
+      const teachers = await listTeachers(`${courseId}`);
       res.status(200).json(teachers)
       break;
   
     default:
       break;
   }
-  
 }
 
 
-async function listTeachers() {
+async function listTeachers(courseId: string) {
   const classroom = await getGoogleClassroom()
   const res = await classroom.courses.teachers.list({
-    pageSize: 10
+    courseId
   })
   const teachers = res.data.teachers
   if (!teachers || teachers.length === 0) {

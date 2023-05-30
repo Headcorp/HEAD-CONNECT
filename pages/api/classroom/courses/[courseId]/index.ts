@@ -21,7 +21,7 @@ export default async function handler(
 }
 
 
-async function getCourse(id: string) {
+export async function getCourse(id: string) {
   const classroom = await getGoogleClassroom()
   const res = await classroom.courses.get({
     id

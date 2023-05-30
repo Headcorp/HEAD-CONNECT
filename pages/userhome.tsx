@@ -1,4 +1,5 @@
 import "@fontsource/ubuntu-mono";
+import "@fontsource/yantramanav";
 
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -6,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { UserNavbar } from "../components/UserNavbar";
 import { UserNavbarMobile } from "../components/UserNavbarMobile";
 import { Tabs } from "../components/Tab";
+import { getSession } from "next-auth/react";
 
 export default function UserHome() {
   const [isMobile, setIsMobile] = useState(false);
@@ -23,4 +25,19 @@ export default function UserHome() {
       </div> */}
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const { req } = context;
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: { destination: "/auth/login" },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
