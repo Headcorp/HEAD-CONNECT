@@ -1,5 +1,5 @@
 import google from 'googleapis';
-import {getGoogleClassroom} from '../../../../authorize'
+import {getGoogleClassroom} from '../../../../../authorize'
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
