@@ -1,6 +1,21 @@
 import React from 'react'
+import google from 'googleapis';
+import { useState, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { ArrowLeftIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { Disclosure, Tab } from '@headlessui/react';
 
-export function CoursesInfo() {
+import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics';
+import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork';
+import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials';
+import { MyTopic } from '../types/topic'
+import { ListItem } from './ListItem'
+
+export function CoursesInfo ({topics}: {topics: MyTopic[]}) {
+  const [openDrawer, setOpenDrawer] = useState(true)
+
   return (
     <div className="w-screen bg-blancsale px-20 py-4 flex-col flex space-y-4">
       <nav className="flex  py-6" aria-label="Breadcrumb">
@@ -112,6 +127,60 @@ export function CoursesInfo() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="space-y-4">
+        <h1 className="text-2xl font-bold text-darkBlue">Course content</h1>
+        <div className="text-md text-darkBlue font-semibold flex space-x-2">
+          <span>19 sections</span>
+          <span>•</span>
+          <span>423 lectures</span>
+          <span>•</span>
+          <span>63h 32m total length</span>
+        </div>
+        <div className="">
+          {
+            topics?.map((topic) => (
+              <Disclosure key={topic.topicId}>
+                {({open}) => (
+                  <>
+                    <Disclosure.Button className="flex w-full border-y-pink border-y justify-between bg-blancsale px-4 py-6 text-left text-sm font-medium text-purple-900 hover:bg-blancsale-200 focus:outline-none focus-visible:ring focus-visible:ring-blancsale-500 focus-visible:ring-opacity-75">
+                      <span>{topic.name}</span>
+                      <ChevronDownIcon
+                        className={`${
+                          open ? 'rotate-180 transform' : ''
+                        } h-5 w-5 text-purple-500`}
+                      />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 flex flex-col pt-4 pb-2 text-sm text-gray-500">
+                      {topic.courseWorkMaterials?.map((courseWorkMaterial, ind) => (
+                        <div key={courseWorkMaterial.id}>
+                          <ListItem order={ind+1} title={courseWorkMaterial.title?courseWorkMaterial.title:''}/>
+                        </div>
+                      ))}
+                      {topic.courseWorks?.map((courseWork) => (
+                        <div key={courseWork.id}>
+                          <ListItem order={0} title={courseWork.title?courseWork.title:''}/>
+                        </div>
+                      ))}
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
+            ))
+          }
+        </div>
+      </div>
+      <div className="">
+        <h1 className="text-lg font-semibold text-darkBlue">Requirements</h1>
+
+      </div>
+      <div className="">
+        <h1 className="text-lg font-semibold text-darkBlue">Description</h1>
+
+      </div>
+      <div className="">
+        <h1 className="text-lg font-semibold text-darkBlue">Who this course is for:</h1>
+
       </div>
     </div>
   )

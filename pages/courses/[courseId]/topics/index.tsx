@@ -1,25 +1,23 @@
+import "@fontsource/yantramanav";
+
 import React from 'react'
+import axios from 'axios';
+import google from 'googleapis';
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import "@fontsource/yantramanav";
-import { CoursesNavbarMobile } from '../../../../components/CoursesNavbarMobile'
-import { CoursesNavbar } from '../../../../components/CoursesNavbar'
-import { Playlist } from '../../../../components/Playlist'
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics';
-import google from 'googleapis';
 import { ArrowLeftIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { Disclosure, Tab } from '@headlessui/react';
+
+import { Playlist } from '../../../../components/Playlist'
+import { CoursesNavbarMobile } from '../../../../components/CoursesNavbarMobile'
+import { CoursesNavbar } from '../../../../components/CoursesNavbar'
+import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics';
 import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork';
 import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials';
-import {ListItem} from '../../../../components/ListItem'
-
-type MyTopic = {
-    courseWorks: google.classroom_v1.Schema$CourseWork[] | undefined;
-    courseWorkMaterials: google.classroom_v1.Schema$CourseWorkMaterial[] | undefined;
-} & google.classroom_v1.Schema$Topic
+import { ListItem } from '../../../../components/ListItem'
+import { MyTopic } from '../../../../types/topic'
 
 export default function course({topics}:{topics: MyTopic[], courseWorks: google.classroom_v1.Schema$CourseWork[], courseWorkMaterials: google.classroom_v1.Schema$CourseWorkMaterial[]}) {
   const router = useRouter()
@@ -39,9 +37,8 @@ export default function course({topics}:{topics: MyTopic[], courseWorks: google.
       <Tab.Group>
       <div className="flex px-1 h-screen sm:px-5">
         {/*<Playlist />*/}
-
         <Tab.Panels className={`h-3/4 w-full lg:${openDrawer&&'max-w-xl'} bg-darkBlue relative`}>
-          <div onClick={() => setOpenDrawer(true)} className={`hidden bg-pink text-white w-10 hover:w-36 hover:duration-1000 hover:delay-75 cursor-pointer h-10 lg:${openDrawer ? 'hidden' : 'flex'} items-center overflow-hidden justify-between absolute top-10 right-0`}>
+          <div onClick={() => setOpenDrawer(true)} className={`bg-pink text-white w-10 hover:w-36 hover:duration-1000 hover:delay-75 cursor-pointer h-10 ${openDrawer ? 'lg:hidden' : 'lg:flex'} items-center overflow-hidden justify-between absolute top-10 right-0`}>
             <div className='flex justify-center items-center p-2'>
               <ArrowLeftIcon className='h-6 w-6'/>
             </div>
@@ -62,7 +59,7 @@ export default function course({topics}:{topics: MyTopic[], courseWorks: google.
             </div>
           ))}
         </Tab.Panels>
-        <div className={`${!openDrawer && 'hidden'} w-96`}>
+        <div id="drawer" className={`${!openDrawer && 'hidden'} w-96`}>
           <div className='flex p-1 justify-between'>
             <b>Course content</b>
             <XMarkIcon className='cursor-pointer h-6 w-6' onClick={() => setOpenDrawer(false)}/>

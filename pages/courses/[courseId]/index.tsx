@@ -1,15 +1,21 @@
-import axios from 'axios'
-import { NextApiRequest } from 'next'
 import React from 'react'
+import axios from 'axios'
+import google from 'googleapis'
+import { NextApiRequest } from 'next'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import google from 'googleapis'
 import { useRouter } from 'next/router'
 import { getSession, useSession } from 'next-auth/react'
+
 import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
 import { CoursesInfo } from '@/components/CoursesInfo'
-function AboutCourse({ course, isStudent, teachers }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[] }) {
+import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics'
+import { MyTopic } from '../../../types/topic'
+import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork'
+import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials'
+
+function AboutCourse({ course, isStudent, teachers, topics }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[] }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -58,7 +64,7 @@ function AboutCourse({ course, isStudent, teachers }: { course: google.classroom
         <span>Espace publicité</span>
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
-      <CoursesInfo />
+      <CoursesInfo topics={topics} />
       {/*<div>{JSON.stringify(course)}</div>
          <div>{teachers.map((teacher) => <div>JSON.stringify(course)</div>)}</div>
         <button onClick={access} className="text-yellow px-4 py-2 md:px-8 md:py-4 font-bold text-2xl md:text-4xl rounded-md btn xl:text-5xl">{isStudent ? "Resume Course" : "Enroll"}</button>*/}
@@ -100,7 +106,17 @@ export async function getServerSideProps(context: any) {
 
   }
 
+  let topics = await listTopics(courseId) as MyTopic[] | undefined
+  //const topics = await listTopics(courseId);
+  const courseWorks = await listCourseWorks(courseId);
+  const courseWorkMaterials = await listCourseWorkMaterials(courseId);
+
+  topics?.forEach((topic, index, array) => {
+    array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
+    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial) => courseWorkMaterial.topicId == topic.topicId)
+  })
+
   return {
-    props: { course, isStudent, teachers },
+    props: { course, isStudent, teachers, topics },
   };
 }
