@@ -1,7 +1,8 @@
-import { GridView } from '@/components/GridView'
 import axios from 'axios';
 import google from 'googleapis';
 import React from 'react'
+
+import { GridView } from '@/components/GridView'
 
 function Courses({courses}:{courses: google.classroom_v1.Schema$Course[]}) {
   return (
