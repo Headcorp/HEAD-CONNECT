@@ -1,12 +1,27 @@
 import axios from 'axios';
 import google from 'googleapis';
 import React from 'react'
+import { useState, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
+
+import { CoursesNavbar } from '@/components/CoursesNavbar'
+import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
 
 import { GridView } from '@/components/GridView'
 
 function Courses({courses}:{courses: google.classroom_v1.Schema$Course[]}) {
+  const [isMobile, setIsMobile] = useState(false)
+  const tempIsMobile = useMediaQuery({ maxWidth: 768 })
+
+  useEffect(() => {
+    setIsMobile(tempIsMobile)
+  }, [tempIsMobile])
+
   return (
-    <GridView type="courses" views={courses}/>
+    <div className="">
+      {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
+      <GridView type="courses" views={courses}/>
+    </div>
   )
 }
 

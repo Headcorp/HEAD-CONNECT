@@ -9,6 +9,7 @@ import { getSession, useSession } from 'next-auth/react'
 
 import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
+import { FormationPriceCard } from '@/components/FormationPriceCard'
 import { CoursesInfo } from '@/components/CoursesInfo'
 import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics'
 import { MyTopic } from '../../../types/topic'
@@ -59,12 +60,15 @@ function AboutCourse({ course, isStudent, teachers, topics }: { course: google.c
   }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-blancsale'>
       {/*<div className="py-4 flex item-center justify-center">
         <span>Espace publicité</span>
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
-      <CoursesInfo topics={topics} />
+      <div className="flex relative">
+        <CoursesInfo topics={topics} />
+        <FormationPriceCard />
+      </div>
       {/*<div>{JSON.stringify(course)}</div>
          <div>{teachers.map((teacher) => <div>JSON.stringify(course)</div>)}</div>
         <button onClick={access} className="text-yellow px-4 py-2 md:px-8 md:py-4 font-bold text-2xl md:text-4xl rounded-md btn xl:text-5xl">{isStudent ? "Resume Course" : "Enroll"}</button>*/}
@@ -112,8 +116,8 @@ export async function getServerSideProps(context: any) {
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
 
   topics?.forEach((topic, index, array) => {
-    array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
-    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial) => courseWorkMaterial.topicId == topic.topicId)
+    array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId).map(({ title }) => ({ title }))
+    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial) => courseWorkMaterial.topicId == topic.topicId).map(({ title }) => ({ title }))
   })
 
   return {

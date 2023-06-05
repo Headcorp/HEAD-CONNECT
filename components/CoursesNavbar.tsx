@@ -24,7 +24,7 @@ export function CoursesNavbar() {
             </a> */}
             <div className="w-2/3 flex space-x-0">
                 <input
-                type="text"
+                type="search"
                 className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50"
                 placeholder="Search"
                 />

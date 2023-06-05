@@ -8,7 +8,7 @@ import { NoData } from "./NoData"
 
 export function GridView ({views, type}: {views: google.classroom_v1.Schema$Course[], type: string}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full mx-auto my-4">
         {
             views.length ? 
             views.map((view) => (

@@ -1,9 +1,9 @@
 import { useState, useEffect} from 'react';
 import { useMediaQuery } from 'react-responsive';
 
+import {Banner} from './Banner';
 import {Navbar} from './Navbar';
 import { NavbarMobile } from './NavbarMobile';
-import {Banner} from './Banner';
 
 export function Header () {
   const [isMobile, setIsMobile] = useState(false)

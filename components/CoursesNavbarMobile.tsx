@@ -53,7 +53,7 @@ export function CoursesNavbarMobile () {
         <div className="flex justify-between space-y-2 items-center userheader p-4">
           <a href="/" className="w-1/3">
             <img
-              src="../images/logo.png"
+              src="/images/logo.png"
               alt="logo"
               className="w-full sm:w-1/2 hover:opacity-60"
             />
@@ -77,7 +77,7 @@ export function CoursesNavbarMobile () {
               <div className="navbar_mobile absolute z-50 top-30 mt-20 text-2xl font-bold right-0 w-[50%] sm:w-[33%] text-center uppercase rounded-xl text-darkBlue p-8 flex flex-col justify-between space-y-2">
                 <div className="w-full flex space-x-0">
                   <input
-                  type="text"
+                  type="search"
                   className="w-4/5 rounded-l-full p-2 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50"
                   placeholder="Search"
                   />
