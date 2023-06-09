@@ -102,4 +102,5 @@ async function authorize() {
 
 //authorize().then(listCourses).catch(console.error);
 const getGoogleClassroom = async () => await authorize().then((auth) => google.classroom({version: 'v1', auth})).catch(console.error)
+
 module.exports = { getGoogleClassroom }
