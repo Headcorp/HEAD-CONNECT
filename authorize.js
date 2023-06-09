@@ -16,7 +16,14 @@ const SCOPES = [
   'https://www.googleapis.com/auth/classroom.coursework.me',
   'https://www.googleapis.com/auth/classroom.courseworkmaterials',
   'https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly',
-  'https://www.googleapis.com/auth/classroom.topics.readonly'
+  'https://www.googleapis.com/auth/classroom.topics.readonly',
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.appdata',
+  'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/drive.metadata',
+  'https://www.googleapis.com/auth/drive.metadata.readonly',
+  'https://www.googleapis.com/auth/drive.photos.readonly',
+  'https://www.googleapis.com/auth/drive.readonly'
 
 ];
 // The file token.json stores the user's access and refresh tokens, and is
@@ -102,4 +109,5 @@ async function authorize() {
 
 //authorize().then(listCourses).catch(console.error);
 const getGoogleClassroom = async () => await authorize().then((auth) => google.classroom({version: 'v1', auth})).catch(console.error)
-module.exports = { getGoogleClassroom }
+const getGoogleDrive = async () => await authorize().then((auth) => google.drive({version: 'v3', auth})).catch(console.error)
+module.exports = { getGoogleClassroom, getGoogleDrive }
