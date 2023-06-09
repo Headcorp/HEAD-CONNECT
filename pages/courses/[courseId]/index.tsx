@@ -15,8 +15,11 @@ import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics'
 import { MyTopic } from '../../../types/topic'
 import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork'
 import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials'
+import { odoo } from '@/utils/odoo'
+import { getCourse } from '@/pages/api/classroom/courses/[courseId]'
+import { SlideChannel } from '@/types/website_slide'
 
-function AboutCourse({ course, isStudent, teachers, topics }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[] }) {
+function AboutCourse({ course, isStudent, teachers, topics, channel }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -66,7 +69,7 @@ function AboutCourse({ course, isStudent, teachers, topics }: { course: google.c
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
       <div className="flex relative">
-        <CoursesInfo topics={topics} />
+        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} />
         <FormationPriceCard />
       </div>
       {/*<div>{JSON.stringify(course)}</div>
@@ -82,17 +85,28 @@ export async function getServerSideProps(context: any) {
   const { req } = context
   const { courseId } = context.query
   const session = await getSession({ req });
-  let course = {}
   let isStudent = false
   let teachers = []
+  let channel
+
+  odoo.connect(function (err:any) {
+    if (err) { return console.log(err); }
+    console.log('Connected to Odoo server.');
+    var inParams = [];
+    inParams.push([['name', '=', courseId]]);
+    inParams.push(['name', 'slide_content_ids', 'total_views', 'total_votes', 'total_time', 'rating_avg_stars', 'members_count']); //fields
+    inParams.push(0); //offset
+    inParams.push(1); //limit
+    var params = [];
+    params.push(inParams);
+    odoo.execute_kw('slide.channel', 'search_read', params, function (err:any, value:any) {
+        if (err) { return console.log(err); }
+        channel = value[0]
+        console.log('Result: ', value);
+    });
+  })
 
   const API_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000'
-  try {
-    const { data } = await axios.get(`${API_URL}/api/classroom/courses/${courseId}`)
-    course = data
-  } catch (error) {
-
-  }
 
   try {
     //Verifier si enrolé
@@ -103,7 +117,6 @@ export async function getServerSideProps(context: any) {
   }
 
   try {
-
     const { data } = await axios.get(`${API_URL}/api/classroom/courses/${courseId}/teachers`)
     teachers = data
   } catch (error) {
@@ -112,6 +125,7 @@ export async function getServerSideProps(context: any) {
 
   let topics = await listTopics(courseId) as MyTopic[] | undefined
   //const topics = await listTopics(courseId);
+  const course = await getCourse(courseId);
   const courseWorks = await listCourseWorks(courseId);
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
 
@@ -121,6 +135,6 @@ export async function getServerSideProps(context: any) {
   })
 
   return {
-    props: { course, isStudent, teachers, topics },
+    props: { course, isStudent, teachers, topics, channel },
   };
 }

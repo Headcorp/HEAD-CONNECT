@@ -7,7 +7,7 @@ export function ListItem({order=0, title='', completion_time=""}:{order?:number,
   const [value, setValue] = useState(false)
   const toggleChecked = () => {
     setValue(!value)
-    console.log(value)
+    // console.log(value)
   }
   const router = useRouter()
   const { pathname } = router

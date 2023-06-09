@@ -8,7 +8,7 @@ import { NoData } from "./NoData"
 
 export function GridView ({views, type}: {views: google.classroom_v1.Schema$Course[], type: string}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full mx-auto my-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full mx-auto my-2">
         {
             views.length ? 
             views.map((view) => (
@@ -55,7 +55,7 @@ export function OneView ({name, updateTime, creationTime, id}: google.classroom_
 
     return (
         <div className="w-[90%] mx-auto sm:space-y-1">
-            <div className="">
+            <div className="my-2">
                 <img src="../images/test.jpg" className="rounded-xl sm:rounded-2xl" />
             </div>
             <h1 className="text-2xl text-darkBlue font-bold">{name}</h1>

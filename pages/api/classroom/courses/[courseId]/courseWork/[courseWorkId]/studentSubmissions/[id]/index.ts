@@ -46,6 +46,7 @@ async function getStudentSubmission(id: string, courseWorkId: string, courseId: 
 
 async function modifyAttachementsStudentSubmission(id: string, courseWorkId: string, courseId: string, requestBody:any) {
     const classroom = await getGoogleClassroom()
+    // classroom.courses.courseWork.studentSubmissions.modifyAttachments
     const res = await classroom.courses.courseWork.studentSubmissions.modifyAttachments({
       id,
       courseId,

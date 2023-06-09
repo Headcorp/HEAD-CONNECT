@@ -72,21 +72,21 @@ export function PastEvents() {
           <div className="flex bg-blancsale w-1/4 flex-col">
             <Tab.List className="flex bg-blancsale lg:flex-col space-y-6 w-full justify-center items-center my-4">
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                 ${activeButton === 'conferences' ? 'text-white btn' : 'text-red'}`}
                 onClick={() => setActiveButton('conferences')}>
                   Conferences
               </Tab>
 
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                 ${activeButton === 'workshops' ? 'text-white btn' : 'text-red'}`}
                 onClick={() => setActiveButton('workshops')}>
                   Workshops
               </Tab>
 
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                 ${activeButton === 'formations' ? 'text-white btn' : 'text-red'}`}
                 onClick={() => setActiveButton('formations')}>
                   Formations
@@ -109,7 +109,7 @@ export function PastEvents() {
           <Menu as="div" className="relative inline-block">
             <div>
               <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                <span className="text-xl font-bold text-pink">Profil</span>
+                <span className="text-xl font-bold text-pink">Categories</span>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-xl font-bold text-pink hover:text-violet-100"
                   aria-hidden="true"
@@ -129,21 +129,21 @@ export function PastEvents() {
                 <div className="w-full rounded-xl bg-blancsale p-6 flex flex-col items-center space-y-4">
                   <Tab.List className="flex flex-col space-y-6 bg-blancsale w-full justify-center items-center">
                     <Tab
-                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                       ${activeButton === 'conferences' ? 'text-white btn' : 'text-red'}`}
                       onClick={() => setActiveButton('conferences')}>
                         Conferences
                     </Tab>
 
                     <Tab
-                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                       ${activeButton === 'workshops' ? 'text-white btn' : 'text-red'}`}
                       onClick={() => setActiveButton('workshops')}>
                         Workshops
                     </Tab>
 
                     <Tab
-                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl
+                      className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
                       ${activeButton === 'formations' ? 'text-white btn' : 'text-red'}`}
                       onClick={() => setActiveButton('formations')}>
                         Formations
@@ -153,6 +153,7 @@ export function PastEvents() {
               </Menu.Items>
             </Transition>
           </Menu>
+          <span className="text-xl text-pink uppercase font-bold m-4">{activeButton}</span>
           <Tab.Panels className="lg:w-3/4">
             <Tab.Panel className="w-full flex space-x-4 space-y-4 flex-col lg:flex-row justify-center items-center lg:items-start">
               <GridView type="conferences" views={[]} />

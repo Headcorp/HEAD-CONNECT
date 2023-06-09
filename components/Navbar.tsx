@@ -18,7 +18,7 @@ export function Navbar () {
   const { data: session } = useSession()
 
   return (
-    <div className="w-full mx-auto flex justify-between items-center p-2">
+    <div className="w-full mx-auto flex justify-between items-center p-2"> {/* Pour fixer la navbar on rajoute : fixed top-0 z-50 bg-white */}
       <a href="/" className="w-1/4">
         <img src="../images/logo.png" alt="logo" className="w-1/2 xl:w-full hover:opacity-60" />
       </a>

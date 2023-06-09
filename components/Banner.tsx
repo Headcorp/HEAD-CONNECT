@@ -5,7 +5,7 @@ export function Banner () {
     const router = useRouter()
 
     return (
-        <div className="relative py-8 md:py-0">
+        <div className="relative py-8 md:py-0"> {/* Pour fixer la navbar on rajoute : mt-12 */}
             <div className="flex flex-col md:flex-row justify-evenly mx-auto items-center bottom-0 left-0 top-0 right-0 bg:cover md:bg-contain bg-no-repeat md:bg-center"
                 style={{ backgroundImage: `url(../icons/stars.svg)` }}>
                 <div className="md:ml-20 space-y-4 md:space-y-8 w-5/6 text-center md:text-start">

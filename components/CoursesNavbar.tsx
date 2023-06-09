@@ -24,9 +24,9 @@ export function CoursesNavbar() {
             </a> */}
             <div className="w-2/3 flex space-x-0">
                 <input
-                type="search"
-                className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50"
-                placeholder="Search"
+                    type="search"
+                    className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50"
+                    placeholder="Search"
                 />
                 <button className="w-1/5 rounded-r-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50 flex items-center justify-center hover:bg-pink">
                 <svg

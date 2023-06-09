@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import axios from "axios"
 import { Tab } from "@headlessui/react"
+import { useMediaQuery } from 'react-responsive'
+import { useState, useEffect } from 'react'
 import { Navigation, Pagination } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import axios from "axios"
 
 import { UpcomingCard } from './UpcomingCard'
 

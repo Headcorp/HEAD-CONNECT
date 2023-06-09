@@ -2,7 +2,7 @@ import React from 'react'
 
 export function LearningTools () {
   return (
-    <div className="w-3/4 mx-auto space-y-4 mb-4">
+    <div className="w-full sm:w-3/4 mx-auto space-y-4 mb-4">
         <h1 className="text-darkBlue text-3xl font-bold">Learning reminders</h1>
         <div className="space-y-2">
             <h2 className="text-darkBlue text-2xl font-semibold">Calendar events</h2>
@@ -24,7 +24,7 @@ export function LearningTools () {
                     <option value="">+233 (Ghana)</option>
                 </select>
                 <div className="flex w-1/2">
-                    <input type="numbers" placeholder="00 00 00 00" className="p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50" />
+                    <input type="number" placeholder="00 00 00 00" className="p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50" />
                     <button className="btn text-white px-8 text-xl font-bold">Send</button>
                 </div>
                 <span className="text-sm text-darkBlue">

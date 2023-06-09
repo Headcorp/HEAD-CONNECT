@@ -1,13 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Tab, Popover, Transition } from "@headlessui/react";
 import { useSession } from "next-auth/react";
 
 import { UserHomeBlog } from "./UserHomeBlog";
 import { UserHomeEvents } from "./UserHomeEvents";
+import { ProfilePage } from "./ProfilePage";
 import { Example } from "./Dropdowns";
 
 export function UserNavbar() {
   const { data: session } = useSession()
+  const [activeButton, setActiveButton] = useState('blog')
+
   return (
     <div>
       <Tab.Group>
@@ -23,9 +26,13 @@ export function UserNavbar() {
             <div className="flex flex-col space-x-8 text-xl font-semibold lg:text-2xl lg:space-x-10 xl:text-3xl w-1/3 items-center justify-center">
               <Tab.List className="flex space-x-4 rounded-xl">
                 <Tab
-                  className="bg-white/50 border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center"
+                  className={`${activeButton === 'blog' ?
+                    'bg-pink border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center' :
+                    'bg-white/50 border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center'}`
+                  }
+                  onClick={() => setActiveButton('blog')}
                 >
-                  <span className="text-pink">Blog</span>
+                  <span className={`${activeButton === 'blog' ? "text-white" : "text-pink"}`}>Blog</span>
                   <svg
                     width="25"
                     height="25"
@@ -35,14 +42,18 @@ export function UserNavbar() {
                   >
                     <path
                       d="M21.335 0.799984L23.45 2.91498C24.035 3.49998 24.035 4.44498 23.45 5.02998L17 11.495V26H0.5V3.49998H16.505L19.205 0.799984C19.805 0.214984 20.75 0.199984 21.335 0.799984ZM12.845 13.52L20.9 5.47998L18.77 3.34998L10.73 11.405L9.665 14.585L12.845 13.52Z"
-                      fill="#E8334E"
+                      fill={`${activeButton === 'blog'? "white" : "#E8334E"}`}
                     />
                   </svg>
                 </Tab>
                 <Tab
-                  className="bg-pink border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center"
+                  className={`${activeButton === 'events' ?
+                    'bg-pink border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center' :
+                    'bg-white/50 border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center'}`
+                  }
+                  onClick={() => setActiveButton('events')}
                 >
-                  <span className="text-white">Events</span>
+                  <span className={`${activeButton === 'events' ? "text-white" : "text-pink"}`}>Events</span>
                   <svg
                     width="25"
                     height="25"
@@ -52,7 +63,28 @@ export function UserNavbar() {
                   >
                     <path
                       d="M10.6875 17.3125L15.0313 12.9688C15.2813 12.7188 15.5833 12.5938 15.9375 12.5938C16.2917 12.5938 16.5938 12.7188 16.8438 12.9688C17.0938 13.2188 17.2188 13.5208 17.2188 13.875C17.2188 14.2292 17.0938 14.5313 16.8438 14.7813L11.5625 20.0625C11.3125 20.3125 11.0208 20.4375 10.6875 20.4375C10.3542 20.4375 10.0625 20.3125 9.8125 20.0625L7.15625 17.4063C6.90625 17.1563 6.78125 16.8542 6.78125 16.5C6.78125 16.1458 6.90625 15.8438 7.15625 15.5938C7.40625 15.3438 7.70834 15.2188 8.0625 15.2188C8.41667 15.2188 8.71875 15.3438 8.96875 15.5938L10.6875 17.3125ZM3.25 25.5C2.5625 25.5 1.97375 25.255 1.48375 24.765C0.993752 24.275 0.749169 23.6867 0.750002 23V5.5C0.750002 4.8125 0.995002 4.22375 1.485 3.73375C1.975 3.24375 2.56334 2.99917 3.25 3H4.5V1.75C4.5 1.39584 4.62 1.09875 4.86 0.858754C5.1 0.618754 5.39667 0.499171 5.75 0.500004C6.10417 0.500004 6.40125 0.620004 6.64125 0.860004C6.88125 1.1 7.00084 1.39667 7 1.75V3H17V1.75C17 1.39584 17.12 1.09875 17.36 0.858754C17.6 0.618754 17.8967 0.499171 18.25 0.500004C18.6042 0.500004 18.9013 0.620004 19.1413 0.860004C19.3813 1.1 19.5008 1.39667 19.5 1.75V3H20.75C21.4375 3 22.0263 3.245 22.5163 3.735C23.0063 4.225 23.2508 4.81334 23.25 5.5V23C23.25 23.6875 23.005 24.2763 22.515 24.7663C22.025 25.2563 21.4367 25.5008 20.75 25.5H3.25ZM3.25 23H20.75V10.5H3.25V23Z"
-                      fill="white"
+                      fill={`${activeButton === 'events'? "white" : "#E8334E"}`}
+                    />
+                  </svg>
+                </Tab>
+                <Tab
+                  className={`${activeButton === 'profil' ?
+                    'bg-pink border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center' :
+                    'bg-white/50 border-2 border-pink rounded-xl px-6 py-2 flex space-x-2 items-center justify-center'}`
+                  }
+                  onClick={() => setActiveButton('profil')}
+                >
+                  <span className={`${activeButton === 'profil' ? "text-white" : "text-pink"}`}>Profil</span>
+                  <svg
+                    width="25"
+                    height="25"
+                    viewBox="0 0 24 26"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M21.335 0.799984L23.45 2.91498C24.035 3.49998 24.035 4.44498 23.45 5.02998L17 11.495V26H0.5V3.49998H16.505L19.205 0.799984C19.805 0.214984 20.75 0.199984 21.335 0.799984ZM12.845 13.52L20.9 5.47998L18.77 3.34998L10.73 11.405L9.665 14.585L12.845 13.52Z"
+                      fill={`${activeButton === 'profil'? "white" : "#E8334E"}`}
                     />
                   </svg>
                 </Tab>
@@ -204,6 +236,9 @@ export function UserNavbar() {
             </Tab.Panel>
             <Tab.Panel className="">
               <UserHomeEvents />
+            </Tab.Panel>
+            <Tab.Panel className="">
+              <ProfilePage />
             </Tab.Panel>
           </Tab.Panels>
         </div>

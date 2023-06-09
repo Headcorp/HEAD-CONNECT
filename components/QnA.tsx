@@ -4,10 +4,10 @@ import { RatingCard } from './RatingCard'
 
 export function QnA () {
   return (
-    <div className="w-3/4 mx-auto space-y-4">
+    <div className="w-full sm:w-3/4 mx-auto space-y-4">
         <div className="flex flex-col space-y-2">
             <input type="search" placeholder="Search all course questions" className="w-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50" />
-            <div className="flex items-end space-x-2">
+            <div className="flex flex-col sm:flex-row sm:items-end space-x-2 space-y-2">
                 <div className="flex flex-col">
                     <span className="text-darkBlue font-bold text-xl">Filters:</span>
                     <select name="" id="" className="p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale/50">
