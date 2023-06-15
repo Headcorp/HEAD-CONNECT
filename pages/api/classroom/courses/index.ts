@@ -22,9 +22,11 @@ export default async function handler(
 
 async function listCourses() {
   const classroom = await getGoogleClassroom()
+  console.log(classroom)
   const res = await classroom.courses.list({
     pageSize: 10,
   });
+ 
   const courses = res.data.courses
   if (!courses || courses.length === 0) {
     console.log('No courses found.');
