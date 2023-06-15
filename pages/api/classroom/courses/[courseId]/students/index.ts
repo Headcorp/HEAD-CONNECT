@@ -6,6 +6,7 @@ import { Session } from 'next-auth';
 import axios from 'axios';
 import { idText } from 'typescript';
 import { getCourse } from '..';
+import { odoo } from '@/utils/odoo';
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,36 +34,65 @@ export default async function handler(
 
 
 async function listStudents(courseId: string) {
-  const classroom = await getGoogleClassroom()
-  const res = await classroom.courses.students.list({
-    courseId
-  })
-  const students = res.data.students
-  if (!students || students.length === 0) {
-    console.log('No students found.');
-    return;
-  }
-  console.log('students:');
-  students.forEach((student) => {
-    console.log(`${student.userId} (${student.profile})`);
-    console.log(typeof student);
+  let students
+  odoo.connect(function (err: any) {
+    if (err) { return console.log(err); }
+    console.log('Connected to Odoo server.');
+    var inParams = [];
+    inParams.push([["courseId", "=", courseId]]);
+    var params = [];
+    params.push(inParams);
+    odoo.execute_kw('res.partner', 'search', params, function (err: any, value: any) {
+        if (err) { return console.log(err); }
+        console.log('Result: ', value);
+        students = value
+    });
   });
+  // const classroom = await getGoogleClassroom()
+  // const res = await classroom.courses.students.list({
+  //   courseId
+  // })
+  // const students = res.data.students
+  // if (!students || students.length === 0) {
+  //   console.log('No students found.');
+  //   return;
+  // }
+  // console.log('students:');
+  // students.forEach((student) => {
+  //   console.log(`${student.userId} (${student.profile})`);
+  //   console.log(typeof student);
+  // });
   return students
 }
 
 async function createStudent(courseId: string, enrollmentCode: string, requestBody: Object) {
-  const classroom = await getGoogleClassroom()
-  const res = await classroom.courses.students.create({
-    enrollmentCode,
-    courseId,
-    requestBody
-  })
-  const student = res.data
-  if (!student) {
-    console.log('No students created.');
-    return;
-  }
+  let student
+  odoo.connect(function (err: any) {
+    if (err) { return console.log(err); }
+    console.log('Connected to Odoo server.');
+    var inParams = [];
+    inParams.push([["courseId", "=", courseId], ["enrollmentCode", "=", enrollmentCode]]); //id to update
+    inParams.push(requestBody)
+    var params = [];
+    params.push(inParams);
+    odoo.execute_kw('res.partner', 'create', params, function (err: any, value: any) {
+        if (err) { return console.log(err); }
+        console.log('Result: ', value);
+        student = value
+    });
+  });
+  // const classroom = await getGoogleClassroom()
+  // const res = await classroom.courses.students.create({
+  //   enrollmentCode,
+  //   courseId,
+  //   requestBody
+  // })
+  // const student = res.data
+  // if (!student) {
+  //   console.log('No students created.');
+  //   return;
+  // }
   console.log('students:');
-  
+
   return student
 }
