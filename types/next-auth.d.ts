@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession } from "next-auth"
+import google from 'googleapis'
 
 declare module "next-auth" {
   /**

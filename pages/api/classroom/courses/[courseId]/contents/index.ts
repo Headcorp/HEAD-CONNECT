@@ -8,10 +8,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+
+  const {courseId} = req.query;
+
   switch (req.method) {
+    
     case 'GET':
-      const courses = await listCourses();
-      res.status(200).json(courses)
+      const ratings = await listRatings(`${courseId}`);
+      res.status(200).json(ratings)
       break;
   
     default:
@@ -19,12 +23,14 @@ export default async function handler(
   }
 }
 
-export async function listCourses() {
-  console.log(`${URL}/courses`);
-  const { data } = await axios.post(`${URL}/courses`, {
+export async function listRatings(channel_id: string) {
+  console.log(`${URL}/ratings`);
+  const { data } = await axios.post(`${URL}/ratings`, {
+    params: {channel_id}
+  }, {
     headers: {
-      "Content-Type": "application/json"
+      "rating-Type": "application/json"
     }
   });
-  return JSON.parse(data.result).courses
+  return JSON.parse(data.result).ratings
 }

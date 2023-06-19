@@ -5,15 +5,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { NoData } from "./NoData"
+import Image from "next/image";
 
 export function GridView ({views, type}: {views: google.classroom_v1.Schema$Course[], type: string}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full mx-auto my-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full mx-auto my-2">
         {
             views.length ? 
             views.map((view) => (
                 <Link href={`/${type}/${view.id}`}>
-                    <OneView key={view.id} name={`${view.name}`} creationTime={view.creationTime} id={view.id} />
+                    <OneView key={view.id} image={view.website_background_image_url} name={`${view.name}`} creationTime={view.creationTime} id={view.id} />
                 </Link>
             )) :
             <NoData/>
@@ -22,7 +23,7 @@ export function GridView ({views, type}: {views: google.classroom_v1.Schema$Cour
   )
 }
 
-export function OneView ({name, updateTime, creationTime, id}: google.classroom_v1.Schema$Course) {
+export function OneView ({name, image, updateTime, creationTime, id}: google.classroom_v1.Schema$Course) {
     const [studentsCount, setStudentsCount] = useState(0)
     const getStudents = async (courseId: string) => {
         try {
@@ -56,7 +57,7 @@ export function OneView ({name, updateTime, creationTime, id}: google.classroom_
     return (
         <div className="w-[90%] mx-auto sm:space-y-1">
             <div className="my-2">
-                <img src="../images/test.jpg" className="rounded-xl sm:rounded-2xl" />
+                <Image alt={`${name}`} width={1000} height={1000} src={`${process.env.NEXT_PUBLIC_IMAGE}${image}`} className="rounded-xl sm:rounded-2xl" />
             </div>
             <h1 className="text-2xl text-darkBlue font-bold">{name}</h1>
             <div className="flex space-x-2">
