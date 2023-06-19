@@ -123,18 +123,18 @@ export async function getServerSideProps(context: any) {
 
   }
 
-  let topics = await listTopics(courseId) as MyTopic[] | undefined
+  //let topics = await listTopics(courseId) as MyTopic[] | undefined
   //const topics = await listTopics(courseId);
   const course = await getCourse(courseId);
-  const courseWorks = await listCourseWorks(courseId);
-  const courseWorkMaterials = await listCourseWorkMaterials(courseId);
+  const contents = await listContents(courseId)
+  const ratings = await listRatings(courseId)
 
-  topics?.forEach((topic, index, array) => {
+  /*topics?.forEach((topic, index, array) => {
     array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId).map(({ title }) => ({ title }))
     array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial) => courseWorkMaterial.topicId == topic.topicId).map(({ title }) => ({ title }))
-  })
+  })*/
 
   return {
-    props: { course, isStudent, teachers, topics, channel },
+    props: { course, contents, ratings },
   };
 }

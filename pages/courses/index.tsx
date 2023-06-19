@@ -8,6 +8,7 @@ import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
 
 import { GridView } from '@/components/GridView'
+import { listCourses } from '../api/classroom/courses';
 
 function Courses({courses}:{courses: google.classroom_v1.Schema$Course[]}) {
   const [isMobile, setIsMobile] = useState(false)
@@ -46,7 +47,7 @@ function Courses({courses}:{courses: google.classroom_v1.Schema$Course[]}) {
 export default Courses
 
 export async function getServerSideProps(context: any) {
-    let courses = []
+    /*let courses = []
     const API_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000'
     try {
         const {data} = await axios.get(`${API_URL}/api/classroom/courses`)
@@ -54,7 +55,9 @@ export async function getServerSideProps(context: any) {
         console.log("cou", courses)
     } catch (error) {
         console.log(error)
-    }
+    }*/
+    const courses = await listCourses();
+    console.log(`course: ${courses}`)
   
     return {
       props: {courses},
