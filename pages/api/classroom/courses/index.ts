@@ -26,5 +26,9 @@ export async function listCourses() {
       "Content-Type": "application/json"
     }
   });
+  // if (typeof data.result !== 'undefined') {
+  //   return JSON.parse(data.result).courses
+  // }
+  // return null
   return JSON.parse(data.result).courses
 }
