@@ -1,3 +1,5 @@
+
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios'
 
@@ -14,8 +16,8 @@ export default async function handler(
   switch (req.method) {
     
     case 'GET':
-      const contents = await listContents(`${courseId}`);
-      res.status(200).json(contents)
+      const ratings = await listRatings(`${courseId}`);
+      res.status(200).json(ratings)
       break;
   
     default:
@@ -23,14 +25,18 @@ export default async function handler(
   }
 }
 
-export async function listContents(id: string) {
-  console.log(`${URL}/contents`);
-  const { data } = await axios.post(`${URL}/contents`, {
-    params: {id}
+export async function listRatings(channel_id: string) {
+  console.log(`${URL}/ratings`);
+  const { data } = await axios.post(`${URL}/ratings`, {
+    params: {channel_id}
   }, {
     headers: {
-      "Content-Type": "application/json"
+      "rating-Type": "application/json"
     }
   });
-  return JSON.parse(data.result).contents
+  if (typeof data.result !== 'undefined') {
+    return JSON.parse(data.result).ratings
+  }
+  return null
+  // return JSON.parse(data.result).ratings
 }

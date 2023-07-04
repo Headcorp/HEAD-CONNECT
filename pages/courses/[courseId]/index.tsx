@@ -1,23 +1,25 @@
 import React from 'react'
 import axios from 'axios'
 import google from 'googleapis'
+import { odoo } from '@/utils/odoo'
 import { NextApiRequest } from 'next'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { useRouter } from 'next/router'
 import { getSession, useSession } from 'next-auth/react'
 
+import { MyTopic } from '../../../types/topic'
 import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
 import { FormationPriceCard } from '@/components/FormationPriceCard'
 import { CoursesInfo } from '@/components/CoursesInfo'
 import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics'
-import { MyTopic } from '../../../types/topic'
 import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork'
 import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials'
-import { odoo } from '@/utils/odoo'
 import { getCourse } from '@/pages/api/classroom/courses/[courseId]'
 import { SlideChannel } from '@/types/website_slide'
+import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
+import { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
 
 function AboutCourse({ course, isStudent, teachers, topics, channel }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel }) {
   const [isMobile, setIsMobile] = useState(false)

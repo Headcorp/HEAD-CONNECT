@@ -3,6 +3,11 @@ import {getGoogleClassroom} from '../../../../../../authorize'
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { odoo } from '@/utils/odoo';
+import axios from 'axios';
+
+
+const URL = process.env.URL || 'http://localhost:8069/headconnect'
+const DB = process.env.DB || 'Test'
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +28,20 @@ export default async function handler(
 
 
 export async function listCourseWorks(courseId: string) {
+  // console.log(`${URL}/courses_works`);
+  // const { data } = await axios.post(`${URL}/courses_works`, {
+  //   params: {courseId: courseId}
+  // }, {
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   }
+  // });
+  // if (typeof data.result !== 'undefined') {
+  //   return JSON.parse(data.result).courseWorks
+  // }
+  // return null
+  // return JSON.parse(data.result).courseWorks
+
   let courseWorks: google.classroom_v1.Schema$CourseWork[] | undefined
   odoo.connect(function (err: any) {
     if (err) { return console.log(err); }
@@ -37,6 +56,7 @@ export async function listCourseWorks(courseId: string) {
         courseWorks = value
     });
   });
+
   // const classroom = await getGoogleClassroom()
   // const res = await classroom.courses.courseWork.list({
   //   courseId

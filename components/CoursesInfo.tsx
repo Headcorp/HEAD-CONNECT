@@ -10,7 +10,7 @@ import { RatingCard } from './RatingCard'
 import { InstructorCard } from './InstructorCard'
 
 export function CoursesInfo ({course, isStudent}: {course: google.classroom_v1.Schema$Course, topics: MyTopic[], channel: SlideChannel, isStudent: boolean}) {
-  
+
   return (
     <div className="w-full lg:w-2/3 px-8 sm:px-20 py-4 flex-col flex space-y-4 mb-32 lg:mb-4">
       <nav className="flex py-6" aria-label="Breadcrumb">
@@ -95,7 +95,7 @@ export function CoursesInfo ({course, isStudent}: {course: google.classroom_v1.S
           <span>•</span>
           <span>423 lectures</span>
           <span>•</span>
-          <span>63h 32m total length</span>
+          {course.total_time ? <span>{course.total_time} h total length</span>: undefined}
         </div>
         <div className="w-full">
           {/*
