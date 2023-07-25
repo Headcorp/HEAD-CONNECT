@@ -6,4 +6,11 @@ export type SlideChannel = {
     total_time: string; 
     rating_avg_stars: number;
     members_count: number;
+    my_description: string;
+    write_date: string;
+    language: string;
+    outcomes: string;
+    requirements: string;
+    my_description_html: string;
+    target: string;
 }

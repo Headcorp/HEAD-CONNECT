@@ -1,6 +1,6 @@
 import google from 'googleapis'
 
-export function RatingCard ({rating}: {rating: google.classroom_v1.Schema$Course}) {
+export function RatingCard ({rating}: {rating: any}) {
   return (
     <div className="w-full bg-white rounded-xl p-8 flex flex-col space-y-4">
       <div className="flex space-x-2">

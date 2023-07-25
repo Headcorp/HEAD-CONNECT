@@ -8,20 +8,21 @@ import { useMediaQuery } from 'react-responsive'
 import { useRouter } from 'next/router'
 import { getSession, useSession } from 'next-auth/react'
 
-import { MyTopic } from '../../../types/topic'
 import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
 import { FormationPriceCard } from '@/components/FormationPriceCard'
 import { CoursesInfo } from '@/components/CoursesInfo'
+
+import { MyTopic } from '../../../types/topic'
 import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics'
 import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork'
 import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials'
 import { getCourse } from '@/pages/api/classroom/courses/[courseId]'
 import { SlideChannel } from '@/types/website_slide'
 import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
-import { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
+import ratings, { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
 
-function AboutCourse({ course, isStudent, teachers, topics, channel }: { course: google.classroom_v1.Schema$Course, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel }) {
+function AboutCourse({ course, isStudent, teachers, topics, channel, ratings }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -71,7 +72,7 @@ function AboutCourse({ course, isStudent, teachers, topics, channel }: { course:
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
       <div className="flex relative">
-        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} />
+        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} ratings={ratings} />
         <FormationPriceCard />
       </div>
       {/*<div>{JSON.stringify(course)}</div>

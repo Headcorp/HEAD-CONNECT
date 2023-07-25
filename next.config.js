@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"]
+    domains: ["localhost", "5d88-196-171-101-56.ngrok-free.app"]
   }
 }
 

@@ -5,6 +5,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { odoo } from '@/utils/odoo';
 import axios from 'axios';
 
+const URL = process.env.URL || 'http://localhost:8069/headconnect'
+const DB = process.env.DB || 'Test'
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse< google.classroom_v1.Schema$Topic[] | undefined>
@@ -24,34 +27,34 @@ export default async function handler(
 
 
 export async function listTopics(courseId: string) {
-//   const { data } = await axios.post(`${URL}/contents`, {
-//     params:{courseId: courseId}
-//   }, {
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   if (typeof data.result !== 'undefined') {
-//     return JSON.parse(data.result).topics
-//   }
-//   return null
-//   // return JSON.parse(data.result).topics
-// }
-
-  let topics
-  odoo.connect(function (err: any) {
-    if (err) { return console.log(err); }
-    console.log('Connected to Odoo server.');
-    var inParams = [];
-    inParams.push([["courseId", "=", courseId]]);
-    var params = [];
-    params.push(inParams);
-    odoo.execute_kw('res.partner', 'search', params, function (err: any, value: any) {
-        if (err) { return console.log(err); }
-        console.log('Result: ', value);
-        topics = value
-    });
+  const { data } = await axios.post(`${URL}/contents`, {
+    params:{courseId: courseId}
+  }, {
+    headers: {
+      "Content-Type": "application/json"
+    }
   });
+  if (typeof data.result !== 'undefined') {
+    return JSON.parse(data.result).topics
+  }
+  return null
+  // return JSON.parse(data.result).topics
+}
+
+  // let topics
+  // odoo.connect(function (err: any) {
+  //   if (err) { return console.log(err); }
+  //   console.log('Connected to Odoo server.');
+  //   var inParams = [];
+  //   inParams.push([["courseId", "=", courseId]]);
+  //   var params = [];
+  //   params.push(inParams);
+  //   odoo.execute_kw('res.partner', 'search', params, function (err: any, value: any) {
+  //       if (err) { return console.log(err); }
+  //       console.log('Result: ', value);
+  //       topics = value
+  //   });
+  // });
   // const classroom = await getGoogleClassroom()
   // const res = await classroom.courses.topics.list({
   //   courseId
@@ -66,5 +69,5 @@ export async function listTopics(courseId: string) {
   //   console.log(`${topic.name} (${topic.topicId})`);
   //   console.log(typeof topic);
   // });
-  return topics
-}
+  // return topics
+// }

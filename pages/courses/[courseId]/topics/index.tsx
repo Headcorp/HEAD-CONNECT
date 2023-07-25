@@ -50,7 +50,7 @@ export default function course({ topics }: { topics: MyTopic[] }) {
             </div>
             <div>Course content</div>
           </div>
-          {topics.map((topic) => (
+          {/*topics.map((topic) => (
             <div key={topic.topicId}>
             {topic.courseWorkMaterials?.map((courseWorkMaterial) => (
               <Tab.Panel key={courseWorkMaterial.id}>
@@ -65,15 +65,15 @@ export default function course({ topics }: { topics: MyTopic[] }) {
                         allowFullScreen 
                         "https://www.w3schools.com/html/mov_bbb.mp4"
                         {`${material.youtubeVideo?.alternateLink?.replace("watch?v=", "embed/")}`}
-                      /> */}
+                      />}
                       <video controls playsInline src="https://www.w3schools.com/html/mov_bbb.mp4" className="w-full h-[250px] md:h-[400px] lg:h-[500px]"></video>
                     </div>
                   )
                 )}
-                {/* {JSON.stringify(courseWorkMaterial)} */}
+                { {JSON.stringify(courseWorkMaterial)} }
               </Tab.Panel>
-            ))}
-            {topic.courseWorks?.map((courseWork) => (
+            ))*/}
+            {/*topic.courseWorks?.map((courseWork) => (
               <Tab.Panel key={courseWork.id}>
                 { courseWork.workType === "SHORT_ANSWER_QUESTION" ? (
                   <div className="w-full h-[250px] md:h-[400px] lg:h-[500px] flex flex-col justify-center items-center space-y-4 overflow-scroll">
@@ -112,11 +112,11 @@ export default function course({ topics }: { topics: MyTopic[] }) {
                     </form>
                   </div>
                 ) : undefined }
-                {/* {JSON.stringify(courseWork)} */}
+                { {JSON.stringify(courseWork)} }
               </Tab.Panel>
             ))}
             </div>
-          ))}
+          ))*/}
           </Tab.Panels>
           {/* <div className="w-3/4 flex flex-col space-y-4">
             <div className="w-full bg-darkBlue h-[500px]">

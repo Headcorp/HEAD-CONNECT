@@ -11,7 +11,7 @@ import { RatingCard } from './RatingCard'
 import { InstructorCard } from './InstructorCard'
 import { NoData } from './NoData'
 
-export function CoursesInfo ({course, isStudent, ratings}: {course: google.classroom_v1.Schema$Course, topics: MyTopic[], channel: SlideChannel, isStudent: boolean}) {
+export function CoursesInfo ({course, isStudent, ratings}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any}) {
 
   return (
     <div className="w-full lg:w-2/3 px-8 sm:px-20 py-4 flex-col flex space-y-4 mb-32 lg:mb-4">
@@ -63,7 +63,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: google.class
             <svg width="25" height="25" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.9165 18.75H27.0832V14.5834H22.9165M24.9998 41.6667C15.8123 41.6667 8.33317 34.1875 8.33317 25C8.33317 15.8125 15.8123 8.33335 24.9998 8.33335C34.1873 8.33335 41.6665 15.8125 41.6665 25C41.6665 34.1875 34.1873 41.6667 24.9998 41.6667ZM24.9998 4.16669C22.264 4.16669 19.5549 4.70556 17.0273 5.75253C14.4996 6.7995 12.203 8.33408 10.2684 10.2686C6.36144 14.1756 4.1665 19.4747 4.1665 25C4.1665 30.5254 6.36144 35.8244 10.2684 39.7314C12.203 41.666 14.4996 43.2005 17.0273 44.2475C19.5549 45.2945 22.264 45.8334 24.9998 45.8334C30.5252 45.8334 35.8242 43.6384 39.7312 39.7314C43.6382 35.8244 45.8332 30.5254 45.8332 25C45.8332 22.2641 45.2943 19.5551 44.2473 17.0274C43.2004 14.4998 41.6658 12.2032 39.7312 10.2686C37.7967 8.33408 35.5 6.7995 32.9724 5.75253C30.4448 4.70556 27.7357 4.16669 24.9998 4.16669ZM22.9165 35.4167H27.0832V22.9167H22.9165V35.4167Z" fill="#2E5F7E" />
             </svg>
-            {course.write_date ? <span className='text-sm sm:text-lg font-semibold'>Dernière mise à jour {course.write_date?.split(" ")[0]}</span>: undefined}
+            {course.write_date ? <span className='text-sm sm:text-lg font-semibold'>Dernière mise à jour {course.write_date?.split(" ")[0]}</span> : undefined}
           </div>
           <div className="flex space-x-4 items-center justify-center">
             <svg width="25" height="25" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,8 +78,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: google.class
         <div className='w-full p-4 border-2 border-darkBlue rounded-xl flex flex-col space-y-4 items-center justify-center'>
           <span className='font-bold text-lg sm:text-2xl text-darkBlue'>Ce que vous apprenez</span>
           <div className='flex flex-col justify-between sm:flex-row sm:flex-wrap space-x-2 space-y-2'>
-            
-              {course.outcomes? course.outcomes.split(",").map((outcome) => (
+              {course.outcomes? course.outcomes.split(",").map((outcome: string) => (
                 <span className='flex w-[48%] space-x-6 items-center justify-start text-darkBlue font-semibold'>
                   <svg width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.4167 6.25V14.5833M39.5833 35.4167V43.75M6.25 10.4167H14.5833M35.4167 39.5833H43.75M25 6.25L21.0167 18.3604C20.8128 18.9802 20.4662 19.5435 20.0049 20.0049C19.5435 20.4662 18.9802 20.8128 18.3604 21.0167L6.25 25L18.3604 28.9833C18.9802 29.1872 19.5435 29.5338 20.0049 29.9951C20.4662 30.4565 20.8128 31.0198 21.0167 31.6396L25 43.75L28.9833 31.6396C29.1872 31.0198 29.5338 30.4565 29.9951 29.9951C30.4565 29.5338 31.0198 29.1872 31.6396 28.9833L43.75 25L31.6396 21.0167C31.0198 20.8128 30.4565 20.4662 29.9951 20.0049C29.5338 19.5435 29.1872 18.9802 28.9833 18.3604L25 6.25Z" stroke="#2E5F7E" stroke-width="4.16667" stroke-linecap="round" stroke-linejoin="round" />
@@ -135,7 +134,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: google.class
       <div className="space-y-4">
         <h1 className="text-2xl font-semibold text-darkBlue">Requirements</h1>
         <ul className="">
-          {course.requirements? course.requirements.split(",").map((requirement) => (
+          {course.requirements? course.requirements.split(",").map((requirement: string) => (
             <li>{requirement}</li>
           )): undefined}
         </ul>
@@ -151,7 +150,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: google.class
       <div className="space-y-2">
         <h2 className="text-2xl text-darkBlue font-semibold">Who this course is for:</h2>
         <ul className="">
-          {course.target? course.target.split(",").map((target) => (
+          {course.target? course.target.split(",").map((target: string) => (
             <li>{target}</li>
           )): undefined}
         </ul>
@@ -164,9 +163,9 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: google.class
         <h1 className="text-2xl font-semibold text-darkBlue">Ratings</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
-            ratings.map((rating: google.classroom_v1.Schema$Course) => (
+            ratings ? ratings.map((rating: any) => (
               <RatingCard rating={rating} />
-            ))
+            )) : undefined
           }
         </div>
       </div>
