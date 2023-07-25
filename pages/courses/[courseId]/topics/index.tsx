@@ -10,10 +10,12 @@ import { useRouter } from 'next/router';
 import { Disclosure, Tab } from '@headlessui/react';
 import { ArrowLeftIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
+import { MyTopic } from '../../../../types/topic'
 import { listTopics } from '@/pages/api/classroom/courses/[courseId]/topics';
 import { listCourseWorks } from '@/pages/api/classroom/courses/[courseId]/courseWork';
 import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId]/courseWorkMaterials';
-import { MyTopic } from '../../../../types/topic'
+import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents';
+
 import { ListItem } from '../../../../components/ListItem'
 import { Playlist } from '../../../../components/Playlist'
 import { TopicsTab } from '../../../../components/TopicsTab'
@@ -199,10 +201,12 @@ export async function getServerSideProps(context: any) {
   //const topics = await listTopics(courseId);
   const courseWorks = await listCourseWorks(courseId);
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
+  // const contents = await listContents(courseId);
 
   topics?.forEach((topic, index, array) => {
     array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
-    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial) => courseWorkMaterial.topicId == topic.topicId)
+    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial: { topicId: string | null | undefined }) => courseWorkMaterial.topicId == topic.topicId)
+    // array[index].contents = contents?.filter((content: { topicId: string | null | undefined }) => content.topicId == topic.topicId)
   })
 
   return {

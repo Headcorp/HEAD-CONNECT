@@ -3,13 +3,15 @@ import google from 'googleapis'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { Disclosure } from '@headlessui/react'
 import { SlideChannel } from '@/types/website_slide'
+import { getRating } from '@/pages/api/classroom/courses/[courseId]/ratings/[id]'
 
 import { MyTopic } from '../types/topic'
 import { ListItem } from './ListItem'
 import { RatingCard } from './RatingCard'
 import { InstructorCard } from './InstructorCard'
+import { NoData } from './NoData'
 
-export function CoursesInfo ({course, isStudent}: {course: google.classroom_v1.Schema$Course, topics: MyTopic[], channel: SlideChannel, isStudent: boolean}) {
+export function CoursesInfo ({course, isStudent, ratings}: {course: google.classroom_v1.Schema$Course, topics: MyTopic[], channel: SlideChannel, isStudent: boolean}) {
 
   return (
     <div className="w-full lg:w-2/3 px-8 sm:px-20 py-4 flex-col flex space-y-4 mb-32 lg:mb-4">
@@ -159,12 +161,13 @@ export function CoursesInfo ({course, isStudent}: {course: google.classroom_v1.S
         <InstructorCard />
       </div>
       <div className="space-y-4 w-full">
-        <h1 className="text-2xl font-semibold text-darkBlue">Rating</h1>
+        <h1 className="text-2xl font-semibold text-darkBlue">Ratings</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
+          {
+            ratings.map((rating: google.classroom_v1.Schema$Course) => (
+              <RatingCard rating={rating} />
+            ))
+          }
         </div>
       </div>
     </div>

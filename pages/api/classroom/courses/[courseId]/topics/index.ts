@@ -3,6 +3,7 @@ import {getGoogleClassroom} from '../../../../../../authorize'
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { odoo } from '@/utils/odoo';
+import axios from 'axios';
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +24,20 @@ export default async function handler(
 
 
 export async function listTopics(courseId: string) {
+//   const { data } = await axios.post(`${URL}/contents`, {
+//     params:{courseId: courseId}
+//   }, {
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   });
+//   if (typeof data.result !== 'undefined') {
+//     return JSON.parse(data.result).topics
+//   }
+//   return null
+//   // return JSON.parse(data.result).topics
+// }
+
   let topics
   odoo.connect(function (err: any) {
     if (err) { return console.log(err); }

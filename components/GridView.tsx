@@ -11,7 +11,7 @@ export function GridView ({views, type}: {views: google.classroom_v1.Schema$Cour
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full mx-auto my-2">
         {
-            views.length ? 
+            views.length ?
             views.map((view) => (
                 <Link href={`/${type}/${view.id}`}>
                     <OneView key={view.id} image={view.website_background_image_url} name={`${view.name}`} creationTime={view.creationTime} id={view.id} />

@@ -1,19 +1,10 @@
 import axios from "axios"
 import { Tab } from "@headlessui/react"
-import { useMediaQuery } from 'react-responsive'
 import { useState, useEffect } from 'react'
-import { Navigation, Pagination } from "swiper"
-import { Swiper, SwiperSlide } from "swiper/react"
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 import { UpcomingCard } from './UpcomingCard'
 
 export function Feature () {
-    const [slidesPerView, setSlidesPerView] = useState(3)
-    const isMobile = useMediaQuery({ maxWidth: 767 })
-    const isMedium = useMediaQuery({ minWidth: 768, maxWidth: 1023 })
     const [activeButton, setActiveButton] = useState('conferences')
     const [courses, setCourses] = useState([])
 
@@ -29,17 +20,6 @@ export function Feature () {
     useEffect(() => {
       getCourses()
     }, []);
-
-    useEffect(() => {
-      if (isMobile) {
-        setSlidesPerView(1)
-      } else if (isMedium) {
-        setSlidesPerView(2)
-      } else {
-        setSlidesPerView(3)
-        return
-      }
-    }, [isMobile, isMedium]);
 
   return (
     <div id="calendar">
@@ -76,46 +56,13 @@ export function Feature () {
                             </Tab.List>
                             <Tab.Panels>
                                 <Tab.Panel>
-                                    <Swiper
-                                        className="mx-auto mt-4 w-full"
-                                        modules={[Navigation, Pagination]}
-                                        spaceBetween={20}
-                                        slidesPerView={slidesPerView}
-                                        navigation
-                                        pagination={{ clickable: true }}
-                                        >
-                                        <SwiperSlide>
-                                            <UpcomingCard type="conferences" views={[]} />
-                                        </SwiperSlide>
-                                    </Swiper>
+                                    <UpcomingCard type="conferences" views={[]} />
                                 </Tab.Panel>
                                 <Tab.Panel>
-                                    <Swiper
-                                        className="mx-auto mt-4 w-full"
-                                        modules={[Navigation, Pagination]}
-                                        spaceBetween={20}
-                                        slidesPerView={slidesPerView}
-                                        navigation
-                                        pagination={{ clickable: true }}
-                                        >
-                                        <SwiperSlide>
-                                            <UpcomingCard type="workshops" views={[]} />
-                                        </SwiperSlide>
-                                    </Swiper>
+                                    <UpcomingCard type="workshops" views={[]} />
                                 </Tab.Panel>
                                 <Tab.Panel>
-                                    <Swiper
-                                        className="mx-auto mt-4 w-full"
-                                        modules={[Navigation, Pagination]}
-                                        spaceBetween={20}
-                                        slidesPerView={slidesPerView}
-                                        navigation
-                                        pagination={{ clickable: true }}
-                                        >
-                                        <SwiperSlide>
-                                            <UpcomingCard type="courses" views={courses} />
-                                        </SwiperSlide>
-                                    </Swiper>
+                                    <UpcomingCard type="courses" views={courses} />
                                 </Tab.Panel>
                             </Tab.Panels>
                         </Tab.Group>

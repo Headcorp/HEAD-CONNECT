@@ -27,14 +27,18 @@ export default async function handler(
 
 
 export async function listCourseWorkMaterials(courseId: string) {
-  const { data } = await axios.post(`${URL}/courses`, {
+  const { data } = await axios.post(`${URL}/contents`, {
     params:{courseId: courseId}
   }, {
     headers: {
       "Content-Type": "application/json"
     }
   });
-  return JSON.parse(data.result).coursesWorkMaterials[0]
+  if (typeof data.result !== 'undefined') {
+    return JSON.parse(data.result).coursesWorkMaterials[0]
+  }
+  return null
+  // return JSON.parse(data.result).coursesWorkMaterials[0]
 }
 
   // let courseWorkMaterials: google.classroom_v1.Schema$CourseWork[] | undefined
