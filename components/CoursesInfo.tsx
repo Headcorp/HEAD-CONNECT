@@ -140,7 +140,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: SlideChannel
         </ul>
       </div>
       <div className="space-y-4 w-full">
-        <h1 className="text-2xl font-semibold text-darkBlue">my_description</h1>
+        <h1 className="text-2xl font-semibold text-darkBlue">Description</h1>
         <div className="space-y-2">
           {course.my_description_html? course.my_description_html.split(",").map((my_description_html) => (
             <p>{my_description_html}</p>
