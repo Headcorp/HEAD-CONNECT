@@ -16,7 +16,7 @@ export default async function handler(
   switch (req.method) {
     
     case 'GET':
-      const ratings = await listRatings(`${courseId}`);
+      const ratings = await listRatings([`${courseId}`]);
       res.status(200).json(ratings)
       break;
   
@@ -25,15 +25,17 @@ export default async function handler(
   }
 }
 
-export async function listRatings(channel_id: string) {
+export async function listRatings(ids: string[]) {
   console.log(`${URL}/ratings`);
   const { data } = await axios.post(`${URL}/ratings`, {
-    params: {channel_id}
+    ids: ids
   }, {
     headers: {
-      "rating-Type": "application/json"
+      "Content-Type": "application/json"
     }
   });
+  // console.log(ids)
+  // console.log(data.result)
   if (typeof data.result !== 'undefined') {
     return JSON.parse(data.result).ratings
   }

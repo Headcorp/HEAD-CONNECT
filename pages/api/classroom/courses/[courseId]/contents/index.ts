@@ -32,6 +32,8 @@ export async function listContents(id: string) {
       "Content-Type": "application/json"
     }
   });
+  console.log(id)
+  console.log(data.result)
   if (typeof data.result !== 'undefined') {
     return JSON.parse(data.result).contents
   }
