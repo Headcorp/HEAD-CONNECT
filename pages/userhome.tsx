@@ -23,6 +23,7 @@ export default function UserHome() {
       {/* <div className="flex bg-blancsale w-screen h-auto px-8 py-4">
         {!isMobile ? <UserProfilCard /> : null}
       </div> */}
+      
     </div>
   );
 }
