@@ -21,16 +21,18 @@ const LoginSchema = Yup.object().shape(
 );
 const SignupSchema = Yup.object().shape({
   ...loginShape,
+  name: Yup.string().required('Required'),
   confirmPassword: Yup.string().required().oneOf([Yup.ref('password'), ''], 'Must match "password" field value')
 })
 
 const loginInitialValues = {
   username: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  name: ''
 }
 
-function login({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -79,6 +81,15 @@ function login({ providers }: InferGetServerSidePropsType<typeof getServerSidePr
           {({ errors, touched, isValidating }) => (
             <Form className="w-full flex flex-col justify-center space-y-2">
               <div className="flex flex-col space-y-2 w-full">
+                {showPasswordConfirmation && !hidePassword ? 
+                <>
+                <Field
+                  name='name'
+                  type="text"
+                  className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
+                  placeholder="Name"
+                />
+                {errors.name && touched.name && <div>{errors.name}</div>}</>: undefined}
                 <Field
                   name='username'
                   type="text"
@@ -86,6 +97,7 @@ function login({ providers }: InferGetServerSidePropsType<typeof getServerSidePr
                   placeholder="Email"
                 />
                 {errors.username && touched.username && <div>{errors.username}</div>}
+                
                 {hidePassword ? undefined :
                 <>
                   <Field
@@ -194,7 +206,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       providers: await getProviders() ?? [],
-      csrfToken: await getCsrfToken(context),
+      csrfToken: await getCsrfToken(context) ?? null,
     },
   };
 }

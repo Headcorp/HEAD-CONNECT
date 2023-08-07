@@ -22,49 +22,14 @@ import { SlideChannel } from '@/types/website_slide'
 import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
 import ratings, { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
 
-function AboutCourse({ course, isStudent, teachers, topics, channel, ratings }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any }) {
+function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, contents }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any, contents: any }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
   useEffect(() => {
     setIsMobile(tempIsMobile)
   }, [tempIsMobile])
-
-  const router = useRouter()
-  const { data: session } = useSession()
-  const { courseId } = router.query
-
-  const enroll = async () => {
-
-    if (session) {
-      //Utilisateur connecté
-      try {
-        //Enroller l'utilisateur
-        const { data } = await axios.post(`/api/classroom/courses/${courseId}/students`, {
-          studentWorkFolder: {},
-          profile: {},
-          courseId,
-          userId: session.user.id
-        })
-        if (data.id) {
-          //Si succes l'envoyer suivre le cours
-          router.push(`/courses/${courseId}/topics`, { query: { courseId } })
-        }
-      } catch (error) {
-
-      }
-    }
-    else {
-      //Utilisateur non connecté
-      router.push(`/auth/login/redirect=${router.pathname}`)
-    }
-  }
-
-  const access = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    isStudent ? router.push(`/courses/${courseId}/topics`) : enroll()
-  }
-
+  
   return (
     <div className='flex flex-col bg-blancsale'>
       {/*<div className="py-4 flex item-center justify-center">
@@ -72,7 +37,7 @@ function AboutCourse({ course, isStudent, teachers, topics, channel, ratings }: 
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
       <div className="flex relative">
-        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} ratings={ratings} />
+        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} ratings={ratings} contents={contents} />
         <FormationPriceCard />
       </div>
       {/*<div>{JSON.stringify(course)}</div>
@@ -131,6 +96,11 @@ export async function getServerSideProps(context: any) {
   const course = await getCourse(courseId);
   const contents = await listContents(courseId)
   const ratings = await listRatings(courseId)
+  // console.log(contents)
+
+  contents.forEach((content: any, index: number, array: any[]) => {
+    array[index] = {name: content.name}
+  })
 
   /*topics?.forEach((topic, index, array) => {
     array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId).map(({ title }) => ({ title }))

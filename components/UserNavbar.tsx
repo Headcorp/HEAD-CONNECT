@@ -243,6 +243,7 @@ export function UserNavbar() {
           </Tab.Panels>
         </div>
       </Tab.Group>
+      {JSON.stringify(session?.user)}
     </div>
   );
 }

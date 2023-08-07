@@ -9,6 +9,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { useRouter } from "next/router"
+import { SlideChannel } from '@/types/website_slide'
 
 import { NoData } from './NoData'
 
@@ -50,7 +51,7 @@ export function UpcomingCard ({views, type}: {views: google.classroom_v1.Schema$
                                     <h2 className="text-yellow font-bold text-xl xl:text-2xl">{`Date: ${view.write_date?.split(" ")[0]}`}</h2>
                                 </div>
                                 <h2 className="text-red font-bold text-2xl xl:text-3xl">Principal guest</h2>
-                                <img src={`../images/conf1.png`} alt="" className="mx-auto" />
+                                <img src={`${process.env.NEXT_PUBLIC_IMAGE}${view.website_background_image_url}`} alt="" className="mx-auto" />
                                 <div>
                                     <h2 className="text-darkBlue font-bold text-2xl xl:text-3xl">Aliana Kodjo</h2>
                                     <h3 className="text-darkBlue font-bold text-lg xl:text-xl">Data analyst</h3>

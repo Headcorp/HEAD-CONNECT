@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useRouter } from "next/router"
+import { SlideChannel } from '@/types/website_slide'
 
 import { NoData } from './NoData'
 

@@ -24,19 +24,18 @@ export default async function handler(
 }
 
 export async function listContents(id: string) {
-  console.log(`${URL}/contents`);
+  console.log(`${URL}/contents`, id);
   const { data } = await axios.post(`${URL}/contents`, {
-    params: {id}
+    params: {channel_id: parseInt(id)}
   }, {
     headers: {
       "Content-Type": "application/json"
     }
   });
-  console.log(id)
-  console.log(data.result)
+  // console.log(data.result)
   if (typeof data.result !== 'undefined') {
-    return JSON.parse(data.result).contents
+    return JSON.parse(data.result).content
   }
   return null
-  // return JSON.parse(data.result).contents
+  // return JSON.parse(data.result).content
 }

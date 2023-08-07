@@ -22,8 +22,9 @@ import { TopicsTab } from '../../../../components/TopicsTab'
 import { CourseContent } from '../../../../components/CourseContent'
 import { CoursesNavbar } from '../../../../components/CoursesNavbar'
 import { CoursesNavbarMobile } from '../../../../components/CoursesNavbarMobile'
+import { content } from "googleapis/build/src/apis/content";
 
-export default function course({ topics }: { topics: MyTopic[] }) {
+export default function course({ topics, contents }: { topics: MyTopic[], contents: any }) {
   const router = useRouter()
   const { courseId } = router.query
   const [openDrawer, setOpenDrawer] = useState(true)
@@ -44,19 +45,47 @@ export default function course({ topics }: { topics: MyTopic[] }) {
         <div className="flex px-1 h-auto sm:px-5 space-x-4">
           {/*<Playlist />*/}
           <Tab.Panels className={`h-[250px] md:h-[400px] lg:h-[500px] w-full ${openDrawer ? 'lg:w-3/4' : 'lg:w-full'} lg:${openDrawer&&'max-w-xl'} bg-blancsale/60 relative`}>
-          <div onClick={() => setOpenDrawer(true)} className={`bg-pink text-white w-10 hover:w-36 hover:duration-1000 hover:delay-75 cursor-pointer h-10 ${openDrawer ? 'hidden' : 'lg:flex'} items-center overflow-hidden justify-between absolute top-10 right-0`}>
-            <div className='flex justify-center items-center p-2'>
-              <ArrowLeftIcon className='h-6 w-6'/>
+            <div onClick={() => setOpenDrawer(true)} className={`bg-pink text-white w-10 hover:w-36 hover:duration-1000 hover:delay-75 cursor-pointer h-10 ${openDrawer ? 'hidden' : 'lg:flex'} items-center overflow-hidden justify-between absolute top-10 right-0`}>
+              <div className='flex justify-center items-center p-2'>
+                <ArrowLeftIcon className='h-6 w-6'/>
+              </div>
+              <div>Course content</div>
             </div>
-            <div>Course content</div>
-          </div>
-          {/*topics.map((topic) => (
+            {
+              contents.map((content: any) => (
+                <Tab.Panel key={content.id}>
+                  { content.slide_category === "video" ? (
+                    <div key={content.id}>
+                      { <iframe
+                        className = "w-full h-[250px] md:h-[400px] lg:h-[500px]"
+                        title = {`${content.name}`}
+                        src = {`${content.video_url?.replace("watch?v=", "embed/")}`}
+                        // src = {`${content.video_url}`}
+                        // src = "https://www.youtube.com/watch?v=HA6DlL0Rxkw" // Lien de la vidéo (ça ne marche pas)
+                        // src = "https://www.youtube.com/embed/HA6DlL0Rxkw" // Lien de la vidéo modifiée (ça marche)
+                        allowFullScreen 
+                        // "https://www.w3schools.com/html/mov_bbb.mp4"
+                        // {`${material.youtubeVideo?.alternateLink?.replace("watch?v=", "embed/")}`}
+                      />}
+                      {/* <video controls playsInline src="https://www.w3schools.com/html/mov_bbb.mp4" className="w-full h-[250px] md:h-[400px] lg:h-[500px]"></video> */}
+                    </div>
+                    // <div className="w-full h-[250px] md:h-[400px] lg:h-[500px] flex flex-col justify-center items-center space-y-4 overflow-scroll">
+                    //   <h2 className="text-3xl text-darkBlue font-bold uppercase">{content.name}</h2>
+                    //   <p className="text-xl text-darkBlue font-semibold">{content.description}</p>
+                    // </div>
+                  ) : undefined }
+                  {/* {JSON.stringify(content)} */}
+                </Tab.Panel>
+              ))
+            }
+
+          {/*contents.map((content) => (
             <div key={topic.topicId}>
             {topic.courseWorkMaterials?.map((courseWorkMaterial) => (
               <Tab.Panel key={courseWorkMaterial.id}>
                 { courseWorkMaterial.materials?.map((material) => (
                     <div key={material.youtubeVideo?.id}>
-                      {/* <iframe
+                      { <iframe
                         className = "w-full h-[250px] md:h-[400px] lg:h-[500px]"
                         title = {`${material.youtubeVideo?.title}`}
                         src = {`${material.youtubeVideo?.alternateLink?.replace("watch?v=", "embed/")}`}
@@ -72,7 +101,7 @@ export default function course({ topics }: { topics: MyTopic[] }) {
                 )}
                 { {JSON.stringify(courseWorkMaterial)} }
               </Tab.Panel>
-            ))*/}
+                      ))*/}
             {/*topic.courseWorks?.map((courseWork) => (
               <Tab.Panel key={courseWork.id}>
                 { courseWork.workType === "SHORT_ANSWER_QUESTION" ? (
@@ -133,8 +162,15 @@ export default function course({ topics }: { topics: MyTopic[] }) {
               <XMarkIcon className='cursor-pointer h-6 w-6' onClick={() => setOpenDrawer(false)} />
             </div>
             <CourseContent topics={topics} />
-            {/* <Tab.List>
+            <Tab.List>
               {
+                contents.map((content: any, ind: number) => (
+                    <Tab key={content.id}>
+                      <ListItem order={ind + 1} title={content.name ? content.name : ''} />
+                    </Tab>
+                ))
+              }
+              {/* {
                 topics.map((topic) => (
                   <Disclosure key={topic.topicId}>
                     {({ open }) => (
@@ -162,8 +198,8 @@ export default function course({ topics }: { topics: MyTopic[] }) {
                     )}
                   </Disclosure>
                 ))
-              }
-            </Tab.List> */}
+              } */}
+            </Tab.List>
           </div>}
 
           {/*<div id="drawer-right-example" className="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
@@ -192,6 +228,7 @@ export async function getServerSideProps(context: any) {
   const session = await getSession({ req });
   const { courseId } = context.query
 
+  
   if (!session) {
     return {
       redirect: { destination: "/auth/login" },
@@ -201,7 +238,7 @@ export async function getServerSideProps(context: any) {
   //const topics = await listTopics(courseId);
   const courseWorks = await listCourseWorks(courseId);
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
-  // const contents = await listContents(courseId);
+  const contents = await listContents(courseId);
 
   topics?.forEach((topic, index, array) => {
     array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
@@ -210,6 +247,6 @@ export async function getServerSideProps(context: any) {
   })
 
   return {
-    props: { topics },
+    props: { contents },
   };
 }

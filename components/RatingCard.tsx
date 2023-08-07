@@ -14,7 +14,7 @@ export function RatingCard ({rating}: {rating: any}) {
         <div className="flex space-x-4">
           <div className="flex space-y-0 flex-col items-center justify-center">
             <span className="text-pink font-bold text-xl">{rating.create_uid[1]}</span>
-            <span className="text-darkBlue text-lg">Web designer</span>
+            {/* <span className="text-darkBlue text-lg">Web designer</span> */}
           </div>
           <div className="flex space-y-1 flex-col items-start justify-start py-2">
             <span className="text-darkBlue font-semibold text-lg">
@@ -24,9 +24,6 @@ export function RatingCard ({rating}: {rating: any}) {
         </div>
       </div>
       <div className="flex flex-col space-y-4">
-        <span className="text-darkBlue font-bold text-lg">
-          Lorem ipsum dolor sit ame
-        </span>
         <span className="text-darkBlue text-md">
           {rating.rating_text}
         </span>

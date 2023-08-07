@@ -10,8 +10,47 @@ import { ListItem } from './ListItem'
 import { RatingCard } from './RatingCard'
 import { InstructorCard } from './InstructorCard'
 import { NoData } from './NoData'
+import { content } from 'googleapis/build/src/apis/content'
+import { signIn, useSession } from 'next-auth/react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
-export function CoursesInfo ({course, isStudent, ratings}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any}) {
+export function CoursesInfo ({course, isStudent, ratings, contents}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any, contents: any}) {
+
+  const router = useRouter()
+  const { courseId } = router.query
+  const { data: session } = useSession()
+
+  const enroll = async () => {
+
+    if (session) {
+      //Utilisateur connecté
+      try {
+        //Enroller l'utilisateur
+        const { data } = await axios.post(`/api/classroom/courses/${courseId}/students`, {
+          studentWorkFolder: {},
+          profile: {},
+          courseId,
+          userId: session.user.id
+        })
+        if (data.id) {
+          //Si succes l'envoyer suivre le cours
+          router.push(`/courses/${courseId}/topics`, { query: { courseId } })
+        }
+      } catch (error) {
+
+      }
+    }
+    else {
+      //Utilisateur non connecté
+      signIn(undefined, {callbackUrl: router.asPath})
+    }
+  }
+
+  const access = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    isStudent ? router.push(`/courses/${courseId}/topics`) : enroll()
+  }
 
   return (
     <div className="w-full lg:w-2/3 px-8 sm:px-20 py-4 flex-col flex space-y-4 mb-32 lg:mb-4">
@@ -72,7 +111,7 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: SlideChannel
             <span className='text-sm sm:text-lg font-semibold'>{course.language[1] || "Anglais"}</span>
           </div>
         </div>
-        <button className="text-yellow px-4 py-2 sm:px-8 sm:py-4 font-bold text-2xl sm:text-4xl rounded-md btn xl:text-5xl w-1/3 mx-auto sm:mx-2">{isStudent ? "Resume" : "Enroll"}</button>
+        <button onClick={access} className="text-yellow px-4 py-2 sm:px-8 sm:py-4 font-bold text-2xl sm:text-4xl rounded-md btn xl:text-5xl w-1/3 mx-auto sm:mx-2">{isStudent ? "Resume" : "Enroll"}</button>
       </div>
       <div className="w-full flex flex-col space-y-4">
         <div className='w-full p-4 border-2 border-darkBlue rounded-xl flex flex-col space-y-4 items-center justify-center'>
@@ -99,6 +138,27 @@ export function CoursesInfo ({course, isStudent, ratings}: {course: SlideChannel
           {course.total_time ? <span>{course.total_time} h total length</span>: undefined}
         </div>
         <div className="w-full">
+              <Disclosure>
+                {({open}) => (
+                  <>
+                    <Disclosure.Button className="flex w-full border-y-pink border-y justify-between bg-blancsale px-4 py-6 text-left text-2xl font-medium text-pink hover:bg-blancsale-200 focus:outline-none focus-visible:ring focus-visible:ring-blancsale-500 focus-visible:ring-opacity-75">
+                      <span>{course.name}</span>
+                      <ChevronDownIcon
+                        className={`${
+                          open ? 'rotate-180 transform' : ''
+                        } h-5 w-5 text-purple-500`}
+                      />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 flex flex-col pt-4 pb-2 text-sm text-gray-500">
+                      {contents.map((content: { id: React.Key | null | undefined; name: string | undefined }, ind: number) => (
+                        <div key={content.id}>
+                          <ListItem order={ind+1} title={content.name?content.name:''}/>
+                        </div>
+                      ))}
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
           {/*
             topics?.map((topic) => (
               <Disclosure key={topic.topicId}>
