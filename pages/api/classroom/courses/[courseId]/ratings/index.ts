@@ -27,13 +27,15 @@ export default async function handler(
 
 export async function listRatings(channel_id: string) {
   console.log(`${URL}/ratings`);
+  console.log(channel_id)
   const { data } = await axios.post(`${URL}/ratings`, {
     params: {channel_id}
   }, {
     headers: {
-      "rating-Type": "application/json"
+      "Content-Type": "application/json"
     }
   });
+  console.log(data.result)
   if (typeof data.result !== 'undefined') {
     return JSON.parse(data.result).ratings
   }

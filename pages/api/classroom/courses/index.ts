@@ -30,5 +30,6 @@ export async function listCourses() {
   //   return JSON.parse(data.result).courses
   // }
   // return null
+  // console.log(data.result)
   return JSON.parse(data.result).courses
 }

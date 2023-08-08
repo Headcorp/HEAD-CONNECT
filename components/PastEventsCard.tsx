@@ -48,7 +48,7 @@ export function PastEventsCard ({views, type}: {views: google.classroom_v1.Schem
                           style={{ backgroundImage: `url(../images/intersect.png)`, paddingTop: `120px`, paddingLeft: `40px`}}>
                           <button
                             onClick={() => router.push(`/courses/${view.id}`)}
-                            className="text-xl text-yellow py-2 px-4 rounded-xl font-bold bg-red btn3 xl:text-3xl"
+                            className="text-xl text-white py-2 px-4 rounded-xl font-bold bg-red btn xl:text-3xl"
                           >
                             {view.name}
                           </button>

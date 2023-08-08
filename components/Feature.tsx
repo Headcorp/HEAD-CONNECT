@@ -25,29 +25,29 @@ export function Feature () {
     <div id="calendar">
         <div className="relative">
             <div className="z-10 bottom-0 left-0 top-0 right-0 h-screen bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(../images/feature_bg.png)` }}>
+                style={{ backgroundImage: `url(../images/feature_bg2.png)` }}>
                 <div className="absolute z-20 bottom-0 left-0 top-0 right-0 h-screen bg-cover bg-center"
-                    style={{ backgroundImage: `url(../images/gradiant_feature.png)` }}>
+                    style={{ backgroundImage: `url(../images/gradiant_feature2.png)` }}>
                     <div className="w-full text-center mx-auto p-4 my-8 md:my-0">
-                        <h1 className="text-darkBlue font-bold underline text-3xl pb-4 lg:text-4xl xl:text-5xl mb-12 md:mb-0">Head connect's upcoming features</h1>
+                        <h1 className="text-darkBlue font-bold text-3xl pb-4 lg:text-5xl xl:text-5xl mb-12 md:mb-0">Prochaines Fonctionnalités de Head connect</h1>
                         <Tab.Group>
                             <Tab.List className="mx-auto space-x-4 w-full md:w-1/2 mb-6 md:mb-0">
                                 <Tab
-                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-pink border
+                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-skyBlue border
                                     ${activeButton === 'conferences' ? 'btn2' : 'btn3'}`}
                                     onClick={() => setActiveButton('conferences')}
                                 >
                                     Conferences
                                 </Tab>
                                 <Tab
-                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-pink border
+                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-skyBlue border
                                     ${activeButton === 'workshops' ? 'btn2' : 'btn3'}`}
                                     onClick={() => setActiveButton('workshops')}
                                 >
                                     Workshops
                                 </Tab>
                                 <Tab
-                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-pink border
+                                    className={`text-white px-4 py-2 text-md md:text-xl font-bold rounded-xl lg:text-2xl xl:text-3xl border-skyBlue border
                                     ${activeButton === 'formations' ? 'btn2' : 'btn3'}`}
                                     onClick={() => setActiveButton('formations')}
                                 >

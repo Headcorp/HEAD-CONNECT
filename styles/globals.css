@@ -8,35 +8,49 @@
 }
 
 .btn {
-    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+    background: #4F93CF;
+    transition: 0.5s;    
 }
 
 .btn:hover {
-    background: linear-gradient(94.19deg, #FBDB18 -2.07%, #EB5051 59.25%, #E8334E 140.58%);
+    /* background: linear-gradient(94.19deg, #FBDB18 -2.07%, #EB5051 59.25%, #E8334E 140.58%); */
+    /*transition-duration: 300ms;*/
+    color: #4F93CF;
+    background: #ffffff;
+    transition: 0.5s;
 }
 
 .btn2 {
-    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+    background: #4F93CF;
+    transition: 0.5s;
+    border: none;
 }
 
 .btn3:hover {
-    background: linear-gradient(94.19deg, #E8334E -2.07%, #EB5051 59.25%, #FBDB18 140.58%);
+    background: #fff;
+    color: #4F93CF;
+    border : none
+   
 }
 
 .header {
-    background: linear-gradient(180deg, #FFFFFF 24.72%, rgba(235, 80, 81, 0.35) 49.85%, rgba(232, 51, 78, 0.74) 77.25%);
+    /*background: linear-gradient(to right, #9FA2EB 24.72%, #9fa2eb80 49.85%, rgba(232, 51, 78, 0) 77.25%);*/
+    background-image: url(../public/images/pexels-fauxels.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+
 }
 
 .about_bg {
-    background: linear-gradient(180deg, #E9AFB7 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(0deg, #9FA2EB 0%, #c8c9f3aa 100%);
 }
 
 .replay_bg {
-    background: linear-gradient(180deg, #E9AFB7 43.96%, #FFFFFF 57.84%);
+    background: linear-gradient(180deg, #9ea1ef 0%, #d2d3f1aa 100%);
 }
 
 .footer_bg {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.83) 0%, #E8334E 150%);
+    background: linear-gradient(180deg, #e9e9ee 0%, #9FA2EB 150%);
 }
 
 .navbar_mobile {
@@ -44,6 +58,6 @@
 }
 
 .userheader {
-    background: linear-gradient(to right, #da8989, #E9AFB7, #E8334E);
+    background: linear-gradient(to right, #9FA2EB, #b9bbe0, #6a6dc4);
 }
 

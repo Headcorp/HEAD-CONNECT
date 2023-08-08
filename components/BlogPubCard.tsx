@@ -11,7 +11,7 @@ export function BlogPubCard() {
         />
         <div className="flex space-x-4">
           <div className="flex space-y-0 flex-col items-center justify-center">
-            <span className="text-pink font-bold text-2xl">Emma alice</span>
+            <span className="text-darkBlue font-bold text-2xl">Emma alice</span>
             <span className="text-darkBlue text-xl">Web designer</span>
           </div>
           <div className="flex space-y-1 flex-col items-start justify-start py-2">

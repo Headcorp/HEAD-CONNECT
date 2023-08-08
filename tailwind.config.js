@@ -20,7 +20,8 @@ module.exports = {
       yellow:"#FBDB18",
       violet:"#E30A81",
       red:"#E8334E",
-      blancsale:"#FFF1F3"
+      blancsale:"#FFF1F3",
+      skyBlue: "#4F93CF"
     }
   },
   plugins: [],

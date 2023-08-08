@@ -31,7 +31,7 @@ export async function getRating(channel_id: string) {
     params: {channel_id}
   }, {
     headers: {
-      "rating-Type": "application/json"
+      "Content-Type": "application/json"
     }
   });
   if (typeof data.result !== 'undefined') {

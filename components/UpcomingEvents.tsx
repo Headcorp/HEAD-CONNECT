@@ -36,10 +36,10 @@ export function UpcomingEvents () {
       <div className="w-2/3 flex space-x-0">
         <input
           type="text"
-          className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale"
+          className="w-4/5 rounded-l-full p-4 text-xl font-semibold text-darkBlue placeholder:text-skyBlue border-2 border-skyBlue bg-blancsale"
           placeholder="Search"
         />
-        <button className="w-1/5 rounded-r-full p-4 text-xl font-semibold text-pink placeholder:text-pink border-2 border-pink bg-blancsale flex items-center justify-center hover:bg-pink">
+        <button className="w-1/5 rounded-r-full p-4 text-xl font-semibold text-darkBlue placeholder:text-skyBlue border-2 border-skyBlue bg-blancsale flex items-center justify-center hover:bg-skyBlue">
           <svg
             width="26"
             height="26"
@@ -72,22 +72,22 @@ export function UpcomingEvents () {
           <div className="flex bg-blancsale w-1/4 flex-col">
           <Tab.List className="flex bg-blancsale lg:flex-col space-y-6 w-full justify-center items-center my-4">
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
-                ${activeButton === 'conferences' ? 'text-white btn' : 'text-red'}`}
+                className={`border-skyBlue border px-4 py-2 sm:px-6 sm:py-4 hover:text-white hover:bg-skyBlue font-semibold text-lg sm:text-2xl rounded-xl transition-all
+                ${activeButton === 'conferences' ? 'btn text-white' : 'text-darkBlue'}`}
                 onClick={() => setActiveButton('conferences')}>
                   Conferences
               </Tab>
 
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
-                ${activeButton === 'workshops' ? 'text-white btn' : 'text-red'}`}
+                className={`border-skyBlue border px-4 py-2 sm:px-6 sm:py-4 hover:text-white hover:bg-skyBlue font-semibold text-lg sm:text-2xl rounded-xl transition-all
+                ${activeButton === 'workshops' ? 'btn text-white' : 'text-darkBlue'}`}
                 onClick={() => setActiveButton('workshops')}>
                   Workshops
               </Tab>
 
               <Tab
-                className={`border-pink border px-4 py-2 sm:px-6 sm:py-4 text-pink font-semibold text-lg sm:text-2xl rounded-xl btn3 hover:text-white
-                ${activeButton === 'formations' ? 'text-white btn' : 'text-red'}`}
+                className={`border-skyBlue border px-4 py-2 sm:px-6 sm:py-4 hover:text-white hover:bg-skyBlue font-semibold text-lg sm:text-2xl rounded-xl transition-all
+                ${activeButton === 'formations' ? 'btn text-white' : 'text-darkBlue'}`}
                 onClick={() => setActiveButton('formations')}>
                   Formations
               </Tab>

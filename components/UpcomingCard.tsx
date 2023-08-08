@@ -45,11 +45,11 @@ export function UpcomingCard ({views, type}: {views: google.classroom_v1.Schema$
                     <Link key={view.id} href={`/${type}/${view.id}`}>
                         <SwiperSlide>
                             <div className="bg-white/40 mx-auto space-y-1 xl:space-y-4 rounded-xl p-2 text-center xl:w-[400px]">
-                                <div className="bg-pink text-center p-2 rounded-xl mx-auto">
-                                    <h2 className="text-yellow font-bold text-xl xl:text-2xl">{`Theme: ${view.name}`}</h2>
-                                    <h2 className="text-yellow font-bold text-xl xl:text-2xl">{`Date: ${view.write_date?.split(" ")[0]}`}</h2>
+                                <div className="text-center p-2 rounded-xl mx-auto">
+                                    <h2 className="text-black font-bold text-xl xl:text-2xl">{`Theme: ${view.name}`}</h2>
+                                    <h2 className="text-darkBlue font-bold text-xl xl:text-2xl">{`Date: ${view.write_date?.split(" ")[0]}`}</h2>
                                 </div>
-                                <h2 className="text-red font-bold text-2xl xl:text-3xl">Principal guest</h2>
+                                <h2 className="text-red font-medium text-2xl xl:text-4xl">Principal guest</h2>
                                 <img src={`../images/conf1.png`} alt="" className="mx-auto" />
                                 <div>
                                     <h2 className="text-darkBlue font-bold text-2xl xl:text-3xl">Aliana Kodjo</h2>
