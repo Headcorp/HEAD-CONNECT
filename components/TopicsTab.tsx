@@ -12,7 +12,7 @@ import { TopicsFooter } from './TopicsFooter'
 import { QnA } from './QnA'
 import { CourseContent } from './CourseContent'
 
-export function TopicsTab({ topics }: { topics: MyTopic[] }) {
+export function TopicsTab({ topics, contents }: { topics: MyTopic[], contents: any }) {
   const [isMedium, setisMedium] = useState(false)
   const tempisMedium = useMediaQuery({ maxWidth: 1023 })
 
@@ -48,7 +48,7 @@ export function TopicsTab({ topics }: { topics: MyTopic[] }) {
         </Tab.List>
         <Tab.Panels className="lg:mt-2">
           {isMedium && <Tab.Panel className='bg-white p-3 ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:underline'>
-            <CourseContent topics={topics} />
+            <CourseContent topics={topics} contents={contents} />
           </Tab.Panel>}
           <Tab.Panel className='bg-white p-3 ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:underline'>
             <Overview />

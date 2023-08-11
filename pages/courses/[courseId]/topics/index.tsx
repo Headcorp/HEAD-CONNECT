@@ -74,6 +74,11 @@ export default function course({ topics, contents }: { topics: MyTopic[], conten
                     //   <p className="text-xl text-darkBlue font-semibold">{content.description}</p>
                     // </div>
                   ) : undefined }
+                  {
+                    content.slide_category === "infographic" ? (
+                      <div className="">Hello world</div>
+                    ) : undefined
+                  }
                   {/* {JSON.stringify(content)} */}
                 </Tab.Panel>
               ))
@@ -161,15 +166,15 @@ export default function course({ topics, contents }: { topics: MyTopic[], conten
               <b>Course content</b>
               <XMarkIcon className='cursor-pointer h-6 w-6' onClick={() => setOpenDrawer(false)} />
             </div>
-            <CourseContent topics={topics} />
-            <Tab.List>
-              {
+            <CourseContent topics={topics} contents={contents} />
+            {/* <Tab.List> */}
+              {/* {
                 contents.map((content: any, ind: number) => (
                     <Tab key={content.id}>
                       <ListItem order={ind + 1} title={content.name ? content.name : ''} />
                     </Tab>
                 ))
-              }
+              } */}
               {/* {
                 topics.map((topic) => (
                   <Disclosure key={topic.topicId}>
@@ -199,7 +204,7 @@ export default function course({ topics, contents }: { topics: MyTopic[], conten
                   </Disclosure>
                 ))
               } */}
-            </Tab.List>
+            {/* </Tab.List> */}
           </div>}
 
           {/*<div id="drawer-right-example" className="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
@@ -217,7 +222,7 @@ export default function course({ topics, contents }: { topics: MyTopic[], conten
         </div>
       </Tab.Group>
       <div className={`w-full ${openDrawer ? 'lg:w-3/4' : 'w-full'}`}>
-        <TopicsTab topics={topics} />
+        <TopicsTab topics={topics} contents={contents} />
       </div>
     </div>
   )
