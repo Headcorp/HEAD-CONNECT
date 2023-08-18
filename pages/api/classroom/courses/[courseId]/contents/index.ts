@@ -24,7 +24,7 @@ export default async function handler(
 }
 
 export async function listContents(id: string) {
-  console.log(`${URL}/contents`, id);
+  // console.log(`${URL}/contents`, id);
   const { data } = await axios.post(`${URL}/contents`, {
     params: {channel_id: parseInt(id)}
   }, {

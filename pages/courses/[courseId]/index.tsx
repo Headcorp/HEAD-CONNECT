@@ -20,9 +20,21 @@ import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId
 import { getCourse } from '@/pages/api/classroom/courses/[courseId]'
 import { SlideChannel } from '@/types/website_slide'
 import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
-import ratings, { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
+import { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
+import { listTeachers } from '@/pages/api/classroom/courses/[courseId]/teachers'
+import { enrollFunction } from '@/pages/api/classroom/courses/[courseId]/enroll'
 
-function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, contents }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any, contents: any }) {
+type TypeAboutCourse = {
+  channel: SlideChannel,
+  course: SlideChannel,
+  isStudent: boolean,
+  ratings: any,
+  contents: any,
+  teacher: any,
+  enroll: any
+}
+
+function AboutCourse({ course, isStudent, channel, ratings, contents, teacher, enroll }: TypeAboutCourse) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -34,10 +46,18 @@ function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, co
     <div className='flex flex-col bg-blancsale'>
       {/*<div className="py-4 flex item-center justify-center">
         <span>Espace publicité</span>
-  </div>*/}
+      </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
       <div className="flex relative">
-        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} ratings={ratings} contents={contents} />
+        <CoursesInfo
+          isStudent={isStudent}
+          channel={channel}
+          course={course}
+          ratings={ratings}
+          contents={contents}
+          teacher={teacher}
+          enroll={enroll}
+        />
         <FormationPriceCard />
       </div>
       {/*<div>{JSON.stringify(course)}</div>
@@ -96,7 +116,9 @@ export async function getServerSideProps(context: any) {
   const course = await getCourse(courseId);
   const contents = await listContents(courseId)
   const ratings = await listRatings(courseId)
-  // console.log(contents)
+  const teacher = await listTeachers(courseId)
+  const enroll = await enrollFunction(courseId, `${session?.user.mat}`)
+  console.log("enroll:", enroll)
 
   contents.forEach((content: any, index: number, array: any[]) => {
     array[index] = {name: content.name}
@@ -108,6 +130,6 @@ export async function getServerSideProps(context: any) {
   })*/
 
   return {
-    props: { course, contents, ratings },
+    props: { course, contents, ratings, teacher, enroll },
   };
 }

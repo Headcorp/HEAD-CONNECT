@@ -22,7 +22,6 @@ import { TopicsTab } from '../../../../components/TopicsTab'
 import { CourseContent } from '../../../../components/CourseContent'
 import { CoursesNavbar } from '../../../../components/CoursesNavbar'
 import { CoursesNavbarMobile } from '../../../../components/CoursesNavbarMobile'
-import { content } from "googleapis/build/src/apis/content";
 
 export default function course({ topics, contents }: { topics: MyTopic[], contents: any }) {
   const router = useRouter()
@@ -76,7 +75,7 @@ export default function course({ topics, contents }: { topics: MyTopic[], conten
                   ) : undefined }
                   {
                     content.slide_category === "infographic" ? (
-                      <div className="">Hello world</div>
+                      <div className="">Image</div>
                     ) : undefined
                   }
                   {/* {JSON.stringify(content)} */}
@@ -239,17 +238,15 @@ export async function getServerSideProps(context: any) {
       redirect: { destination: "/auth/login" },
     };
   }
-  let topics = await listTopics(courseId) as MyTopic[] | undefined
-  //const topics = await listTopics(courseId);
+  // let topics = await listTopics(courseId) as MyTopic[] | undefined
   const courseWorks = await listCourseWorks(courseId);
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
   const contents = await listContents(courseId);
 
-  topics?.forEach((topic, index, array) => {
-    array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
-    array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial: { topicId: string | null | undefined }) => courseWorkMaterial.topicId == topic.topicId)
-    // array[index].contents = contents?.filter((content: { topicId: string | null | undefined }) => content.topicId == topic.topicId)
-  })
+  // topics?.forEach((topic, index, array) => {
+  //   array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId)
+  //   array[index].courseWorkMaterials = courseWorkMaterials?.filter((courseWorkMaterial: { topicId: string | null | undefined }) => courseWorkMaterial.topicId == topic.topicId)
+  // })
 
   return {
     props: { contents },

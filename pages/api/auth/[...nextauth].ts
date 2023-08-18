@@ -75,7 +75,7 @@ export const authOptions:AuthOptions = {
           const user: any = rest
           return user
         }
-        console.log(5)
+        console.log(5, res.data.error)
         // Return null if user data could not be retrieved
         return null
       }
@@ -96,7 +96,7 @@ export const authOptions:AuthOptions = {
       // Send properties to the client, like an access_token and user id from a provider.
       //session.accessToken = token.accessToken
       session.user.id = token.sub
-      session.user.mat = user.partner_id
+      session.user.mat = user.id
       
       return session
     },
@@ -128,6 +128,7 @@ export const authOptions:AuthOptions = {
         }
         return false
       }
+      console.log(7)
       return true
     }
   }

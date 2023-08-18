@@ -3,53 +3,86 @@ import google from 'googleapis'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { Disclosure } from '@headlessui/react'
 import { SlideChannel } from '@/types/website_slide'
-import { getRating } from '@/pages/api/classroom/courses/[courseId]/ratings/[id]'
+import { signIn, useSession } from 'next-auth/react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
+import { enrollFunction } from '@/pages/api/classroom/courses/[courseId]/enroll'
+import { getRating } from '@/pages/api/classroom/courses/[courseId]/ratings/[id]'
 import { MyTopic } from '../types/topic'
 import { ListItem } from './ListItem'
 import { RatingCard } from './RatingCard'
 import { InstructorCard } from './InstructorCard'
 import { NoData } from './NoData'
-import { content } from 'googleapis/build/src/apis/content'
-import { signIn, useSession } from 'next-auth/react'
-import axios from 'axios'
-import { useRouter } from 'next/router'
 
-export function CoursesInfo ({course, isStudent, ratings, contents}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any, contents: any}) {
+// const URL = process.env.URL || 'http://localhost:8069/headconnect'
+// const DB = process.env.DB || 'Test'
+
+type CourseInfoTypes = {
+  course: SlideChannel,
+  channel: SlideChannel,
+  isStudent: boolean,
+  ratings: any,
+  contents: any,
+  teacher: any,
+  enroll: any
+}
+
+export function CoursesInfo ({course, isStudent, ratings, contents, teacher, enroll}: CourseInfoTypes) {
 
   const router = useRouter()
   const { courseId } = router.query
   const { data: session } = useSession()
 
-  const enroll = async () => {
+  // const enroll = await enrollFunction(`${courseId}`, `${session?.user.id}`)
 
-    if (session) {
-      //Utilisateur connecté
-      try {
-        //Enroller l'utilisateur
-        const { data } = await axios.post(`/api/classroom/courses/${courseId}/students`, {
-          studentWorkFolder: {},
-          profile: {},
-          courseId,
-          userId: session.user.id
-        })
-        if (data.id) {
-          //Si succes l'envoyer suivre le cours
-          router.push(`/courses/${courseId}/topics`, { query: { courseId } })
-        }
-      } catch (error) {
+  // const enroll = async (channel_id: string, partner_id: string) => {
+  //   if (session) {
+  //     //Utilisateur connecté
+  //     try {
+  //       //Enroller l'utilisateur
+  //       const { data } = await axios.post(`/api/classroom/courses/${courseId}/students`, {
+  //         studentWorkFolder: {},
+  //         profile: {},
+  //         courseId,
+  //         userId: session.user.id
+  //       })
+  //       if (data.id) {
+  //         //Si succes l'envoyer suivre le cours
+  //         router.push(`/courses/${courseId}/topics`, { query: { courseId } })
+  //       }
+  //     } catch (error) {
 
-      }
-    }
-    else {
-      //Utilisateur non connecté
-      signIn(undefined, {callbackUrl: router.asPath})
-    }
-  }
+  //     }
+  //     console.log(`${URL}/enroll`, channel_id, partner_id);
+  //     const { data } = await axios.post(`${URL}/enroll`, {
+  //       params: {
+  //         channel_id: parseInt(channel_id),
+  //         partner_id: parseInt(partner_id)
+  //       }
+  //       }, {
+  //         headers: {
+  //           "Content-Type": "application/json"
+  //         }
+  //       });
+  //       console.log(data.result)
+  //       router.push(`/courses/${courseId}/topics`, { query: { courseId } })
+  //       return data.result.enroll
+  //     } catch (error) {
+
+  //     }
+  //   }
+  //   else {
+  //     //Utilisateur non connecté
+  //     signIn(undefined, {callbackUrl: router.asPath})
+  //   }
+  // }
 
   const access = async (e: React.MouseEvent) => {
     e.preventDefault()
-    isStudent ? router.push(`/courses/${courseId}/topics`) : enroll()
+    course.is_member === true ?
+      router.push(`/courses/${courseId}/topics`) :
+        session ? enroll : signIn(undefined, {callbackUrl: router.asPath})
   }
 
   return (
@@ -111,7 +144,7 @@ export function CoursesInfo ({course, isStudent, ratings, contents}: {course: Sl
             <span className='text-sm sm:text-lg font-semibold'>{course.language[1] || "Anglais"}</span>
           </div>
         </div>
-        <button onClick={access} className="text-yellow px-4 py-2 sm:px-8 sm:py-4 font-bold text-2xl sm:text-4xl rounded-md btn xl:text-5xl w-1/3 mx-auto sm:mx-2">{isStudent ? "Resume" : "Enroll"}</button>
+        <button onClick={access} className="text-yellow px-4 py-2 sm:px-8 sm:py-4 font-bold text-2xl sm:text-4xl rounded-md btn xl:text-5xl w-1/3 mx-auto sm:mx-2">{course.is_member ? "Resume" : "Enroll"}</button>
       </div>
       <div className="w-full flex flex-col space-y-4">
         <div className='w-full p-4 border-2 border-darkBlue rounded-xl flex flex-col space-y-4 items-center justify-center'>
@@ -200,7 +233,7 @@ export function CoursesInfo ({course, isStudent, ratings, contents}: {course: Sl
         </ul>
       </div>
       <div className="space-y-4 w-full">
-        <h1 className="text-2xl font-semibold text-darkBlue">my_description</h1>
+        <h1 className="text-2xl font-semibold text-darkBlue">Description</h1>
         <div className="space-y-2">
           {course.my_description_html? course.my_description_html.split(",").map((my_description_html) => (
             <p>{my_description_html}</p>
@@ -217,7 +250,7 @@ export function CoursesInfo ({course, isStudent, ratings, contents}: {course: Sl
       </div>
       <div className="space-y-4 w-full">
         <h1 className="text-2xl font-semibold text-darkBlue">Instructor</h1>
-        <InstructorCard />
+        <InstructorCard teacher={teacher} />
       </div>
       <div className="space-y-4 w-full">
         <h1 className="text-2xl font-semibold text-darkBlue">Ratings</h1>

@@ -6,7 +6,6 @@ import { useMediaQuery } from 'react-responsive'
 
 import { CoursesNavbar } from '@/components/CoursesNavbar'
 import { CoursesNavbarMobile } from '@/components/CoursesNavbarMobile'
-
 import { GridView } from '@/components/GridView'
 import { listCourses } from '../api/classroom/courses';
 
@@ -57,7 +56,7 @@ export async function getServerSideProps(context: any) {
         console.log(error)
     }*/
     const courses = await listCourses();
-    console.log(`course: ${courses}`)
+    // console.log(`course: ${courses}`)
   
     return {
       props: {courses},

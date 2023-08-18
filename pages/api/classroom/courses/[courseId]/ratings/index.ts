@@ -27,7 +27,7 @@ export default async function handler(
 }
 
 export async function listRatings(id: string) {
-  console.log(`${URL}/ratings`, id);
+  // console.log(`${URL}/ratings`, id);
   //const intIds = ids.map(id => parseInt(id))
   const { data } = await axios.post(`${URL}/ratings`, {
     params:{ids: [id]}

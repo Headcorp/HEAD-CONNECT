@@ -14,7 +14,14 @@ export function GridView ({views, type}: {views: google.classroom_v1.Schema$Cour
             views.length ?
             views.map((view) => (
                 <Link href={`/${type}/${view.id}`}>
-                    <OneView key={view.id} image={view.website_background_image_url} name={`${view.name}`} creationTime={view.creationTime} id={view.id} />
+                    <OneView
+                        key={view.id}
+                        image={view.website_background_image_url}
+                        name={`${view.name}`}
+                        creationTime={view.write_date?.split(" ")[0]}
+                        id={view.id}
+                        studentsCount={view.members_count}
+                    />
                 </Link>
             )) :
             <NoData/>
@@ -23,20 +30,20 @@ export function GridView ({views, type}: {views: google.classroom_v1.Schema$Cour
   )
 }
 
-export function OneView ({name, image, updateTime, creationTime, id}: google.classroom_v1.Schema$Course) {
-    const [studentsCount, setStudentsCount] = useState(0)
-    const getStudents = async (courseId: string) => {
-        try {
-          const {data} = await axios.get(`/api/classroom/courses/${courseId}/students`)
-          setStudentsCount(data.length)
-        } catch (error) {
+export function OneView ({name, image, updateTime, creationTime, id, studentsCount}: google.classroom_v1.Schema$Course) {
+    // const [studentsCount, setStudentsCount] = useState(0)
+    // const getStudents = async (courseId: string) => {
+    //     try {
+    //       const {data} = await axios.get(`/api/classroom/courses/${courseId}/students`)
+    //       setStudentsCount(data.length)
+    //     } catch (error) {
           
-        }
-      }
+    //     }
+    //   }
 
-      useEffect(() => {
-        getStudents(`${id}`);
-      }, []);
+    //   useEffect(() => {
+    //     getStudents(`${id}`);
+    //   }, []);
 
     const timeDifference = (updateTime: string) => {
         console.log(updateTime)
