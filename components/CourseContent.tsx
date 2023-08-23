@@ -5,9 +5,14 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { MyTopic } from '../types/topic'
 import { ListItem } from './ListItem'
 
-export function CourseContent({ topics }: { topics: MyTopic[] }) {
+export function CourseContent({ topics, contents }: { topics: MyTopic[], contents: any }) {
   return (
     <Tab.List>
+        {contents.map((content: any, ind: number) => (
+                <Tab key={content.id}>
+                    <ListItem order={ind+1} title={content.name ? content.name : ''}/>
+                </Tab>
+            ))}
         {/*
         topics.map((topic) => (
             <Disclosure key={topic.topicId}>

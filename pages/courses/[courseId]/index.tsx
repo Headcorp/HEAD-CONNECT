@@ -20,9 +20,10 @@ import { listCourseWorkMaterials } from '@/pages/api/classroom/courses/[courseId
 import { getCourse } from '@/pages/api/classroom/courses/[courseId]'
 import { SlideChannel } from '@/types/website_slide'
 import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
+import { listTeachers } from '@/pages/api/classroom/courses/[courseId]/teachers'
 import ratings, { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
 
-function AboutCourse({ course, isStudent, teachers, topics, channel, ratings }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any }) {
+function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, contents, teacher }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any, contents: any, teacher: any }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -72,8 +73,16 @@ function AboutCourse({ course, isStudent, teachers, topics, channel, ratings }: 
   </div>*/}
       {isMobile ? <CoursesNavbarMobile /> : <CoursesNavbar />}
       <div className="flex relative">
-        <CoursesInfo isStudent={isStudent} channel={channel} course={course} topics={topics} ratings={ratings} />
-        <FormationPriceCard />
+        <CoursesInfo 
+          isStudent={isStudent}
+          channel={channel}
+          course={course}
+          topics={topics}
+          ratings={ratings}
+          contents={contents}
+          teacher={teacher}
+        />
+        {/* <FormationPriceCard /> */}
       </div>
       {/*<div>{JSON.stringify(course)}</div>
          <div>{teachers.map((teacher) => <div>JSON.stringify(course)</div>)}</div>
@@ -131,6 +140,11 @@ export async function getServerSideProps(context: any) {
   const course = await getCourse(courseId);
   const contents = await listContents(courseId)
   const ratings = await listRatings(courseId)
+  const teacher = await listTeachers(courseId)
+
+  contents.forEach((content: any, index: number, array: any[]) => {
+    array[index] = {name: content.name}
+  })
 
   /*topics?.forEach((topic, index, array) => {
     array[index].courseWorks = courseWorks?.filter((courseWork) => courseWork.topicId == topic.topicId).map(({ title }) => ({ title }))
@@ -138,6 +152,6 @@ export async function getServerSideProps(context: any) {
   })*/
 
   return {
-    props: { course, contents, ratings },
+    props: { course, contents, ratings, teacher },
   };
 }

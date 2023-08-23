@@ -24,9 +24,6 @@ export function RatingCard ({rating}: {rating: any}) {
         </div>
       </div>
       <div className="flex flex-col space-y-4">
-        <span className="text-darkBlue font-bold text-lg">
-          Lorem ipsum dolor sit ame
-        </span>
         <span className="text-darkBlue text-md">
           {rating.rating_text}
         </span>

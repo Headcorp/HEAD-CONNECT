@@ -23,7 +23,7 @@ import { CourseContent } from '../../../../components/CourseContent'
 import { CoursesNavbar } from '../../../../components/CoursesNavbar'
 import { CoursesNavbarMobile } from '../../../../components/CoursesNavbarMobile'
 
-export default function course({ topics }: { topics: MyTopic[] }) {
+export default function course({ topics, contents }: { topics: MyTopic[], contents: any }) {
   const router = useRouter()
   const { courseId } = router.query
   const [openDrawer, setOpenDrawer] = useState(true)
@@ -50,6 +50,31 @@ export default function course({ topics }: { topics: MyTopic[] }) {
             </div>
             <div>Course content</div>
           </div>
+          {
+            contents.map((content: any) => (
+              <Tab.Panel key={content.id}>
+                {
+                  content.slide_category === "video" ? (
+                    <div key={content.id} className="">
+                      {
+                        <iframe
+                          className="w-full h-[250px] md:h-[400px] lg:h-[500px]"
+                          title={`${content.name}`}
+                          src={`${content.video_url?.replace("watch?v=", "embed/")}`}
+                          allowFullScreen
+                        />
+                      }
+                    </div>
+                  ) : undefined
+                }
+                {/* {
+                  content.slide_category === "infographic" ? (
+
+                  ) : undefined
+                } */}
+              </Tab.Panel>
+            ))
+          }
           {/*topics.map((topic) => (
             <div key={topic.topicId}>
             {topic.courseWorkMaterials?.map((courseWorkMaterial) => (
@@ -132,7 +157,7 @@ export default function course({ topics }: { topics: MyTopic[] }) {
               <b>Course content</b>
               <XMarkIcon className='cursor-pointer h-6 w-6' onClick={() => setOpenDrawer(false)} />
             </div>
-            <CourseContent topics={topics} />
+            <CourseContent topics={topics} contents= {contents} />
             {/* <Tab.List>
               {
                 topics.map((topic) => (
@@ -201,6 +226,7 @@ export async function getServerSideProps(context: any) {
   //const topics = await listTopics(courseId);
   const courseWorks = await listCourseWorks(courseId);
   const courseWorkMaterials = await listCourseWorkMaterials(courseId);
+  const contents = await listContents(courseId)
   // const contents = await listContents(courseId);
 
   topics?.forEach((topic, index, array) => {
@@ -210,6 +236,6 @@ export async function getServerSideProps(context: any) {
   })
 
   return {
-    props: { topics },
+    props: { topics, contents },
   };
 }
