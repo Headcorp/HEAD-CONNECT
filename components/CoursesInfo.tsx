@@ -13,7 +13,7 @@ import { NoData } from './NoData'
 import { useRouter } from 'next/router'
 import { signIn, useSession } from 'next-auth/react'
 
-export function CoursesInfo ({course, isStudent, ratings, contents, teacher}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any, contents: any, teacher: any}) {
+export function CoursesInfo ({course, isStudent, ratings, contents}: {course: SlideChannel, topics: MyTopic[], channel: SlideChannel, isStudent: boolean, ratings: any, contents: any }) {
   const router = useRouter()
   const { courseId } = router.query
   const { data: session } = useSession()
@@ -188,10 +188,10 @@ export function CoursesInfo ({course, isStudent, ratings, contents, teacher}: {c
           )): undefined}
         </ul>
       </div>
-      <div className="space-y-4 w-full">
+      {/* <div className="space-y-4 w-full">
         <h1 className="text-2xl font-semibold text-darkBlue">Instructor</h1>
         <InstructorCard teacher={teacher} />
-      </div>
+      </div> */}
       <div className="space-y-4 w-full">
         <h1 className="text-2xl font-semibold text-darkBlue">Ratings</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

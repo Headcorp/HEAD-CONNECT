@@ -23,7 +23,7 @@ import { listContents } from '@/pages/api/classroom/courses/[courseId]/contents'
 import { listTeachers } from '@/pages/api/classroom/courses/[courseId]/teachers'
 import ratings, { listRatings } from '@/pages/api/classroom/courses/[courseId]/ratings'
 
-function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, contents, teacher }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any, contents: any, teacher: any }) {
+function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, contents }: { course: SlideChannel, isStudent: boolean, teachers: google.classroom_v1.Schema$Teacher[], topics: MyTopic[], channel: SlideChannel, ratings: any, contents: any }) {
   const [isMobile, setIsMobile] = useState(false)
   const tempIsMobile = useMediaQuery({ maxWidth: 768 })
 
@@ -80,7 +80,6 @@ function AboutCourse({ course, isStudent, teachers, topics, channel, ratings, co
           topics={topics}
           ratings={ratings}
           contents={contents}
-          teacher={teacher}
         />
         {/* <FormationPriceCard /> */}
       </div>
@@ -140,7 +139,8 @@ export async function getServerSideProps(context: any) {
   const course = await getCourse(courseId);
   const contents = await listContents(courseId)
   const ratings = await listRatings(courseId)
-  const teacher = await listTeachers(courseId)
+  // const teacher = await listTeachers(courseId)
+  // console.log(teacher)
 
   contents.forEach((content: any, index: number, array: any[]) => {
     array[index] = {name: content.name}
@@ -152,6 +152,6 @@ export async function getServerSideProps(context: any) {
   })*/
 
   return {
-    props: { course, contents, ratings, teacher },
+    props: { course, contents, ratings },
   };
 }
