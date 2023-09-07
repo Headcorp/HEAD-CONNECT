@@ -35,11 +35,11 @@ export function QnA () {
         </div>
         <div className="space-y-4">
             <h1 className="text-darkBlue text-2xl font-bold">All questions in this course</h1>
-            <div className="">
+            {/* <div className="">
                 <RatingCard />
                 <div className="w-full h-[0.5px] bg-red opacity-10"></div>
                 <RatingCard />
-            </div>
+            </div> */}
         </div>
     </div>
   )
