@@ -14,13 +14,13 @@ export function Review () {
               <option value="">3</option>
             </select>
         </div>
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <RatingCard />
             <div className="w-full h-[0.5px] bg-red opacity-10"></div>
           <RatingCard />
             <div className="w-full h-[0.5px] bg-red opacity-10"></div>
           <RatingCard />
-        </div>
+        </div> */}
     </div>
   )
 }
