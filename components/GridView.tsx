@@ -4,15 +4,18 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { SlideChannel } from "@/types/website_slide";
+
+
 import { NoData } from "./NoData"
 import Image from "next/image";
 
-export function GridView ({views, type}: {views: google.classroom_v1.Schema$Course[], type: string}) {
+export function GridView ({views, type}: {views: any, type: string}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full mx-auto my-2">
         {
             views.length ?
-            views.map((view) => (
+            views.map((view: SlideChannel) => (
                 <Link href={`/${type}/${view.id}`}>
                     <OneView
                         key={view.id}
@@ -30,7 +33,7 @@ export function GridView ({views, type}: {views: google.classroom_v1.Schema$Cour
   )
 }
 
-export function OneView ({name, image, updateTime, creationTime, id, studentsCount}: google.classroom_v1.Schema$Course) {
+export function OneView ({name, image, updateTime, creationTime, id, studentsCount}: {name: string, image: string, updateTime?: string, creationTime: string, id: string, studentsCount: number}) {
     // const [studentsCount, setStudentsCount] = useState(0)
     // const getStudents = async (courseId: string) => {
     //     try {
