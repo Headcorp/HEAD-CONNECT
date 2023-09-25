@@ -13,7 +13,7 @@ import { SlideChannel } from '@/types/website_slide'
 
 import { NoData } from './NoData'
 
-export function UpcomingCard ({views, type}: {views: google.classroom_v1.Schema$Course[], type: string}) {
+export function UpcomingCard ({views, type}: {views: any, type: string}) {
     const router = useRouter()
     const [slidesPerView, setSlidesPerView] = useState(3)
     const isMobile = useMediaQuery({ maxWidth: 767 })
@@ -42,7 +42,7 @@ export function UpcomingCard ({views, type}: {views: google.classroom_v1.Schema$
             >
             {
                 views.length ?
-                views.map((view) => (
+                views.map((view: SlideChannel) => (
                     <Link key={view.id} href={`/${type}/${view.id}`}>
                         <SwiperSlide>
                             <div className="bg-white/40 mx-auto space-y-1 xl:space-y-4 rounded-xl p-2 text-center xl:w-[400px]">

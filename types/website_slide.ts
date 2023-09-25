@@ -14,4 +14,6 @@ export type SlideChannel = {
     my_description_html: string;
     target: string;
     is_member: boolean;
+    id: string;
+    website_background_image_url: string;
 }
