@@ -1,17 +1,17 @@
-import NextAuth, { AuthOptions, Session } from "next-auth"
 import "../../../types/next-auth.d.ts"
-import GithubProvider from "next-auth/providers/github"
-import GoogleProvider from "next-auth/providers/google"
-import CredentialsProvider from "next-auth/providers/credentials"
-import {CredentialsConfig} from "next-auth/providers/credentials" 
 import axios from "axios"
 import { JWT } from "next-auth/jwt"
 import { AdapterUser } from "next-auth/adapters"
 import {credentialsType} from '../../../types/auth.js'
+import NextAuth, { AuthOptions, Session } from "next-auth"
+import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials"
+import {CredentialsConfig} from "next-auth/providers/credentials" 
 
 const URL = process.env.URL || 'http://localhost:8069/headconnect'
 const DB = process.env.DB || 'Test'
-NextAuth
+// NextAuth
 export const authOptions:AuthOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -65,7 +65,6 @@ export const authOptions:AuthOptions = {
         })
         console.log(res.data)
 
-      
         // If no error and we have user data, return it
         if (!res.data.error) {
           console.log(4)
@@ -85,53 +84,53 @@ export const authOptions:AuthOptions = {
     signIn: '/auth/login'
   },
   callbacks: {
-    async session({ session, token, user }:{
+    async session({ session, token, user }: {
       session: Session;
       token: JWT;
       user: AdapterUser;
-    }  & {
+    } & {
       newSession: any;
       trigger: "update";
     }) {
       // Send properties to the client, like an access_token and user id from a provider.
       //session.accessToken = token.accessToken
       session.user.id = token.sub
-      session.user.mat = user.id
-      
+      // session.user.mat = user.id
+
       return session
-    },
-  
-    async signIn({user, profile, credentials, email, account}){
-      console.log(6)
-      if(account?.provider!=='credentials'){
-        const res = await axios.post(`${URL}/session/authenticate`, {
-          params: {login: email, password: profile?.sub || account?.providerAccountId, db: DB}
-        }, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        if (!res.data.error) {
-          const {data} = res
-          data.result['web.base.url'] = ''
-          const {db, server_version, server_version_info, support_url, dbuuid, ...rest} = data.result
-          const user: any = rest
-          return true
-        }
-        const {data} = await axios.post(`${URL}/signup`,null, {
-          params:{login:email, lang:"en_US", password:profile?.sub || account?.providerAccountId, name: profile?.name, signup_email: email, confirm_password: profile?.sub || account?.providerAccountId}
-        })
-        if(!data.error){
-          const {db, server_version, server_version_info, support_url, dbuuid, ...rest} = data.result
-          const user: any = rest
-          return true
-        }
-        return false
-      }
-      console.log(7)
-      return true
     }
+    //,
+    // async signIn({user, profile, credentials, email, account}){
+    //   console.log(6)
+    //   if(account?.provider!=='credentials'){
+    //     const res = await axios.post(`${URL}/session/authenticate`, {
+    //       params: {login: email, password: profile?.sub || account?.providerAccountId, db: DB}
+    //     }, {
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       }
+    //     })
+    //     if (!res.data.error) {
+    //       const {data} = res
+    //       data.result['web.base.url'] = ''
+    //       const {db, server_version, server_version_info, support_url, dbuuid, ...rest} = data.result
+    //       const user: any = rest
+    //       return true
+    //     }
+    //     const {data} = await axios.post(`${URL}/signup`,null, {
+    //       params:{login:email, lang:"en_US", password:profile?.sub || account?.providerAccountId, name: profile?.name, signup_email: email, confirm_password: profile?.sub || account?.providerAccountId}
+    //     })
+    //     if(!data.error){
+    //       const {db, server_version, server_version_info, support_url, dbuuid, ...rest} = data.result
+    //       const user: any = rest
+    //       return true
+    //     }
+    //     return false
+    //   }
+    //   console.log(7)
+    //   return true
+    // }
   }
 }
 
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);

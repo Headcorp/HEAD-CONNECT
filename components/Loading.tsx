@@ -4,22 +4,23 @@ function Loading () {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+      const interval = setInterval(() => {
         setIsVisible((isVisible) => !isVisible);
-        }, 1000);
+      }, 1000);
 
-        return () => {
+      return () => {
         clearInterval(interval);
-        };
+      };
     }, []);
 
   return (
     <div className="fixed top-0 z-50 h-screen w-screen flex items-center justify-center bg-white/30">
         { isVisible && <span className="text-pink text-3xl uppercase">
             Chargement...
-        </span>}
+          </span>
+        }
     </div>
   )
 }
 
-export default Loading
+export default Loading;

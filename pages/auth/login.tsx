@@ -33,7 +33,6 @@ const loginInitialValues = {
 }
 
 function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [hidePassword, setHidePassword] = useState(false)
@@ -89,7 +88,7 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
                   className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
                   placeholder="Name"
                 />
-                {errors.name && touched.name && <div>{errors.name}</div>}</>: undefined}
+                {errors.name && touched.name && <div>{errors.name}</div>}</> : undefined}
                 <Field
                   name='username'
                   type="text"
@@ -97,7 +96,7 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
                   placeholder="Email"
                 />
                 {errors.username && touched.username && <div>{errors.username}</div>}
-                
+
                 {hidePassword ? undefined :
                 <>
                   <Field
@@ -108,7 +107,13 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
                   >
                     {({ field }: FieldAttributes<any>) => (
                       <div className="relative">
-                        <input {...field} name="password" type={showPassword ? "text" : "password"} placeholder="Password" className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink" />
+                        <input
+                          {...field}
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
+                        />
                         <button
                           type="button"
                           onClick={togglePasswordVisibility}
@@ -131,7 +136,13 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
                   >
                     {({ field }: FieldAttributes<any>) => (
                       <div className="relative">
-                        <input {...field} name="confirmPassword" type={showPassword ? "text" : "password"} placeholder="Confirm Password" className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink" />
+                        <input
+                          {...field}
+                          name="confirmPassword"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Confirm Password"
+                          className="w-full rounded-xl text-2xl p-4 border-4 border-pink placeholder:text-pink placeholder:text-2xl placeholder:font-bold text-pink font-bold bg-white/50 outline-pink"
+                        />
                         <button
                           type="button"
                           onClick={togglePasswordVisibility}
@@ -143,28 +154,40 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
                     )}
                   </Field>
                   { errors.confirmPassword && touched.confirmPassword && <div>{errors.confirmPassword}</div> }
-                </> :
-                undefined}
-                <button type="reset" onClick={(e) => {
+                </> : undefined}
+                <button
+                  type="reset"
+                  className="text-start"
+                  onClick={(e) => {
                     e.preventDefault()
                     setShowPasswordConfirmation(!showPasswordConfirmation)
                     setHidePassword(false)
-                  }} className="text-start">
+                  }}
+                >
                   <span className="text-darkBlue text-2xl font-bold hover:underline">
                     {showPasswordConfirmation && !hidePassword ? "Already have an account ?" : "Create an account"}
                   </span>
                 </button>
-                <button type="reset" onClick={(e) => {
+                <button
+                  type="reset"
+                  className="text-start"
+                  onClick={(e) => {
                     e.preventDefault()
                     setHidePassword(!hidePassword)
                     setShowPasswordConfirmation(false)
-                  }} className="text-start">
+                  }}
+                >
                   <span className="text-darkBlue text-2xl font-bold hover:underline">
                     {!hidePassword ? "Forgot your password?" : "Login"}
                   </span>
                 </button>
               </div>
-              <button type="submit" className="btn px-8 py-4 text-yellow font-bold text-2xl rounded-xl mx-auto">Connexion</button>
+              <button
+                type="submit"
+                className="btn px-8 py-4 text-yellow font-bold text-2xl rounded-xl mx-auto"
+              >
+                Connexion
+              </button>
             </Form>
           )}
         </Formik>
@@ -174,11 +197,19 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
           <span className="w-1/4 h-[1px] bg-darkBlue text-center"></span>
         </div>
         {Object.values(providers).map((provider) => {
-          if(provider.name != 'Credentials'){
+          if(provider.name != 'Credentials') {
             return (
               <div className='flex' key={provider.name}>
-                <Image className="mx-3 my-2" width={25} height={25} src={`../icons/${provider.name}.svg`} alt={provider.name} />
-                <button className="text-darkBlue text-2xl font-bold hover:underline" onClick={() => signIn(provider.id)}>
+                <Image
+                  className="mx-3 my-2"
+                  width={25} height={25}
+                  src={`../icons/${provider.name}.svg`}
+                  alt={provider.name}
+                />
+                <button
+                  className="text-darkBlue text-2xl font-bold hover:underline"
+                  onClick={() => signIn(provider.id)}
+                >
                   Sign in with {provider.name}
                 </button>
               </div>
@@ -190,7 +221,7 @@ function login({ providers, csrfToken }: InferGetServerSidePropsType<typeof getS
   );
 }
 
-export default login
+export default login;
 
 export async function getServerSideProps(context: any) {
   const { req } = context;
